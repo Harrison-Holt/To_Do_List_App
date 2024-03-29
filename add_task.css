@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+    display: flex; 
+    flex-direction: column;
+    justify-content: start;
+    min-height: 100vh;
+    align-items: center;
+    margin: 0; 
+    background-color: #eaecee; /* Lighter gray for the background */
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    background-color: #34495E; /* Dark blue for the header */
+    width: 100%;
+    padding: 1rem 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1); /* Adding shadow for consistency */
+}
+
+header ul {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-around;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header li {
+    display: inline; 
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    display: inline-block;
+}
+
+header a:hover {
+    background-color: #2c3e50; /* Adjusted color for hover effect */
+}
+
+main {
+    flex: 1; /* Allows the main to grow */
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.add_task_container {
+    background-color: #ffffff; /* White background for the form */
+    padding: 20px;
+    border-radius: 5px; /* Added border radius */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added shadow for consistency */
+    box-sizing: border-box; 
+    width: 50%; /* You can adjust width as needed */
+    margin: 2rem 0; /* Added margin for spacing */
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+input, select, button {
+    width: 100%; /* Full width of the form */
+    padding: 10px;
+    margin-bottom: 1rem; /* Spacing between form items */
+    border: 1px solid #bdc3c7;
+    border-radius: 4px; /* Consistent border-radius */
+    box-sizing: border-box;
+}
+
+button#submit_task_info_button {
+    background-color: #3498db; /* Blue background for the submit button */
+    color: white; 
+    cursor: pointer;
+    border: none;
+}
+
+button#submit_task_info_button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+footer {
+    background-color: #34495E; /* Dark blue for the footer */
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+}
+
+footer p {
+    margin: 0; /* Remove default margin */
+}

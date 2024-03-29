@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title> To-Do List </title>
+        <link rel="stylesheet" href="List.css">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="HomePage.html">Home Page</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Projects.html">Projects</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section class="add_task_container">
+            <button id="add_task_button">Add Task</button>
+            <span id="quotes">Quote of the Day: </span>
+            <button id="export_task_button">Export Tasks</button>
+        </section>
+
+        <section class="title_container">
+            <p>Tasks past due: </p>
+            <p>Tasks due today: </p>
+            <p>Tasks due later: </p>
+            <p>Tasks completed: </p>
+        </section>
+
+        <main class="display_all_tasks_container">
+
+            <section class="past_due_items_container">
+
+            </section>
+        
+            <section class="tasks_today">
+            Tasks Due Today: 
+
+            </section>
+            <section class="later_tasks">
+                <div id="later_tasks_container">
+                    The Tasks Due Later...
+                </div>
+            </section>
+            <section class="completed_tasks">
+                <div id="completed_tasks_container">
+                    The Tasks Completed...
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>Last Updated on March 12, 2024</p>
+        </footer>
+        <script src="List.js"></script>
+    </body>
+</html>

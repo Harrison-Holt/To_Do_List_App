@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
+    margin: 0;
+    background-color: #eaecee; /* Lighter gray for the background */
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    background-color: #34495E;
+    padding: 1rem 0; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+header ul {
+    display: flex; 
+    justify-content: space-around;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header li {
+    display: inline; 
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+}
+
+header a:hover {
+    background-color: #2c3e50;
+}
+
+.add_task_container {
+    display: flex; 
+    justify-content: space-between; /* Spread out the buttons and quote */
+    padding: 1rem;
+    background-color: #f7f9f9;
+    align-items: center;
+}
+
+#add_task_button, #export_task_button {
+    cursor: pointer;
+    background-color: #3498db;
+    color: white; 
+    border: none; 
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+#add_task_button:hover, #export_task_button:hover {
+    background-color: #2980b9;
+}
+
+.title_container {
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); /* Four equal columns */
+    gap: 10px;
+    margin: 0 1rem; /* Margin on the sides */
+    text-align: center; /* Center the text */
+}
+
+.title_container p {
+    background-color: #dfe6e9;
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Four equal columns */
+    gap: 10px;
+    padding: 1rem;
+    background-color: #dfe6e9; /* Container background */
+    border-radius: 4px;
+}
+
+
+
+.past_due_items_container, .tasks_today, .later_tasks, .completed_tasks {
+    background-color: #f39c12; /* Different color for task containers */
+    border-radius: 4px;
+    padding: 1rem;
+    min-height: 150px; /* Minimum height to maintain shape */
+}
+
+footer {
+    background-color: #34495E;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    margin-top: auto; /* Pushes the footer to the bottom */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.task_button {
+    background-color: #e74c3c;
+    color: white; 
+    border: none; 
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer; 
+    margin: 0.5rem;
+}
+
+.task_button:hover {
+    background-color: #c0392b;
+}
+
+.task_card, .completed_card {
+    background-color: yellow; /* Card background */
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.completed_card {
+    background-color: #95a5a6; /* Completed task background */
+}
+
+#quotes {
+    width: auto; /* Adjust based on content */
+    background-color: #3498db; /* Vibrant blue for visibility */
+    color: white;
+    padding: 15px 20px; /* Sufficient padding without being too bulky */
+    margin: 20px 0; /* Maintain some spacing from surrounding elements */
+    border-radius: 8px; /* Soft rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    font-style: italic; /* Italicized quote for emphasis */
+    font-size: 1rem; /* Standard font size for space efficiency */
+    text-align: center; /* Center align the quote for focus */
+    max-width: 80%; /* Limit the max width for better text wrapping */
+    display: block; /* Use block to fit content width, adjust if needed */
+    margin: 20px auto; /* Center the quote container horizontally */
+}
+
+
+@media (max-width: 768px) {
+    header ul {
+        flex-direction: column;
+    }
+
+    .add_task_container, .title_container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .title_container {
+        grid-template-columns: 1fr; /* Single column for labels */
+        margin-top: 1rem;
+    }
+
+    main {
+        grid-template-columns: 1fr; /* Single column for task containers */
+    }
+}
+
