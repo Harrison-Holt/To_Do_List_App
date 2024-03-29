@@ -24,6 +24,6 @@ submit_task_info_button.addEventListener('click', function(event) {
     tasks.push(task_info); 
 
     localStorage.setItem('tasks', JSON.stringify(tasks)); 
-    window.location.href='list.html'; 
+    window.location.href='index.html'; 
 
 }); 
