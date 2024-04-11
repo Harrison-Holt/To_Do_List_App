@@ -180,37 +180,62 @@ function get_past_due_items() {
 }
 
 function get_quote_of_the_day() {
+    const quotesContainer = document.getElementById("quotes");
+    const currentDate = new Date().toISOString().slice(0, 10); // ISO format: YYYY-MM-DD
 
-    const quotes = document.getElementById("quotes"); 
-    const api_link = `https://api.api-ninjas.com/v1/quotes?category=success`;
-    const api_key = 'Yvk4eNG2JLCJ5yGmJounqA==UOBJGJvJs8xcwlLt'; 
+    let storedQuoteData = localStorage.getItem('dailyQuote');
+    if (storedQuoteData) {
+        storedQuoteData = JSON.parse(storedQuoteData);
+        // Check if the stored quote is from today
+        if (storedQuoteData.date === currentDate) {
+            displayQuote(storedQuoteData.quote, storedQuoteData.author);
+            return;
+        }
+    }
 
-    fetch(api_link, {
+    // If there is no quote stored for today, fetch a new one
+    const apiLink = `https://api.api-ninjas.com/v1/quotes?category=success`;
+    const apiKey = 'Yvk4eNG2JLCJ5yGmJounqA==UOBJGJvJs8xcwlLt'; 
+
+    fetch(apiLink, {
         headers: {
-        'X-Api-Key': api_key
+            'X-Api-Key': apiKey
         }
     })
     .then(response => {
-        if(!response.ok) {
-            throw new Error("FAILED CONNECTING TO API"); 
+        if (!response.ok) {
+            throw new Error("FAILED CONNECTING TO API");
         }
-        return response.json(); 
+        return response.json();
     })
     .then(data => {
-        if(data && data.length > 0) {
-            const first_quote = data[0]; 
-            const quote = document.createElement('p'); 
-            quote.innerHTML = `"${first_quote.quote}"<br> -${first_quote.author}`;
-            quotes.appendChild(quote); 
+        if (data && data.length > 0) {
+            const firstQuote = data[0];
+            displayQuote(firstQuote.quote, firstQuote.author);
+            // Store the new quote in localStorage with today's date
+            localStorage.setItem('dailyQuote', JSON.stringify({
+                quote: firstQuote.quote,
+                author: firstQuote.author,
+                date: currentDate
+            }));
         }
     })
     .catch(error => {
-        console.log("Error getting data: ", error); 
-    })
+        console.error("Error getting data: ", error);
+    });
 }
-get_quote_of_the_day(); 
+
+function displayQuote(quote, author) {
+    const quoteElement = document.createElement('p');
+    quoteElement.innerHTML = `"${quote}"<br> -${author}`;
+    document.getElementById("quotes").appendChild(quoteElement);
+}
+
+get_quote_of_the_day();
 get_past_due_items(); 
 get_tasks_due_today(); 
 get_tasks_due_later(); 
 get_completed_tasks();
 }); 
+
+
