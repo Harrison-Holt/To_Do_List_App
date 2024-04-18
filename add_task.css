@@ -77,14 +77,17 @@ input, select, button {
 }
 
 button#submit_task_info_button {
-    background-color: #3498db; /* Blue background for the submit button */
+    background-color: #A2B59F;
     color: white; 
     cursor: pointer;
     border: none;
+    transition: background-color 0.3 ease;
+    transition: transform 0.3 ease;
 }
 
 button#submit_task_info_button:hover {
-    background-color: #2980b9; /* Darker blue on hover */
+    background-color: #82917F;
+    transform: scale(1.05);
 }
 
 footer {
@@ -95,8 +98,8 @@ footer {
     width: 100%;
 }
 footer a:hover i {
-    color: #017bff; 
-    transform: scale(1.1); 
+    color: #82917F;
+    transform: scale(1.5); 
 }
 footer p {
     margin: 0; /* Remove default margin */
