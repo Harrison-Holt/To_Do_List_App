@@ -77,40 +77,42 @@ function get_formatted_date() {
 
 // function to create the task card 
 function create_task_card(task) {
-
     const task_card = document.createElement('div');
-    task_card.classList.add('task_card'); 
-    const list_items = document.createElement('li'); 
+    task_card.classList.add('task_card');
+    const thumbtack = document.createElement('div');
+    thumbtack.classList.add('thumbtack');
+    
+    const list_items = document.createElement('li');
     list_items.classList.add('card_info');
-    const delete_task_button = document.createElement('button'); 
-    delete_task_button.classList.add('task_button'); 
-    delete_task_button.textContent = 'Delete'; 
+    const delete_task_button = document.createElement('button');
+    delete_task_button.classList.add('task_button');
+    delete_task_button.textContent = 'Delete';
     delete_task_button.onclick = function() {
-        delete_task(task.id); 
+        delete_task(task.id);
     }
 
     list_items.innerHTML = `Name: ${task.task_name}<br> Due Date: ${task.task_date}<br> 
-    Due Time: ${task.task_time}<br> priority: ${task.priority}`; 
+    Due Time: ${task.task_time}<br> Priority: ${task.priority}`;
 
-    task_card.appendChild(list_items); 
-    task_card.appendChild(delete_task_button); 
+    task_card.appendChild(thumbtack);
+    task_card.appendChild(list_items);
+    task_card.appendChild(delete_task_button);
 
-    if(task.task_completed === false) {
-    const complete_task_button = document.createElement('button'); 
-    complete_task_button.classList.add('completed_card'); 
-    complete_task_button.textContent = 'Complete'; 
-    complete_task_button.onclick = function() {
-
-        complete_task(task.id); 
-        complete_task_button.remove(); 
-    }
-    task_card.appendChild(complete_task_button); 
+    if (!task.task_completed) {
+        const complete_task_button = document.createElement('button');
+        complete_task_button.classList.add('completed_card');
+        complete_task_button.textContent = 'Complete';
+        complete_task_button.onclick = function() {
+            complete_task(task.id);
+            complete_task_button.remove();
+        }
+        task_card.appendChild(complete_task_button);
     } else {
-        list_items.innerHTML += `<br><br><span> Task Completed! </span>`; 
-        task_card.style.backgroundColor = 'grey'; 
+        list_items.innerHTML += `<br><br><span> Task Completed! </span>`;
+        task_card.style.backgroundColor = 'grey';
     }
 
-    return task_card; 
+    return task_card;
 }
 
 // function to display the tasks due on the current date 

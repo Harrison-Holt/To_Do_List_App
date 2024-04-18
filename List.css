@@ -7,7 +7,7 @@ header {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
 header h1 {
-    color: white; 
+    color: black; 
 }
 header ul {
     display: flex; 
@@ -23,7 +23,7 @@ header li {
 
 header a {
     text-decoration: none;
-    color: white;
+    color: black;
     padding: 10px;
     font-size: 36px;
 }
@@ -52,7 +52,7 @@ body {
 #add_task_button, #export_task_button {
     cursor: pointer;
     background-color: #A2B59F;
-    color: white; 
+    color: black; 
     border: none; 
     padding: 10px 15px;
     border-radius: 4px;
@@ -76,7 +76,7 @@ body {
 }
 
 .title_container p {
-    background-color: #dfe6e9;
+    background-color: #789EC5;
     border-radius: 4px;
     padding: 0.5rem;
     font-weight: 500;
@@ -100,11 +100,14 @@ main {
 /* footer styles */ 
 footer {
     background-color: #caa478;
-    color: white;
+    color: black;
     padding: 1rem;
     text-align: center;
-    margin-top: auto; /* Pushes the footer to the bottom */
+    margin-top: auto; 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+i {
+    font-size: 36px;
 }
 footer a:hover i {
     color: #82917F;
@@ -113,9 +116,7 @@ footer a:hover i {
 footer p {
     margin: 0;
 }
-i {
-    font-size:36px;
-}
+
 footer a {
     text-decoration: none; 
     color: inherit; 
@@ -138,19 +139,33 @@ footer h1 {
     transition: transform 0.3 ease;
 }
 
+.thumbtack {
+    position: absolute;
+    top: 10px;  /* adjust as needed */
+    left: 50%;  /* centers the thumbtack horizontally on the card */
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: green; /* thumbtack color */
+    border-radius: 50%;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.25); /* subtle shadow for depth */
+}
+
 .task_button:hover {
     background-color: #c0392b;
     transform: scale(1.05);
 }
 
 /* card styles */ 
-.task_card, .completed_card {
-    background-color: yellow; 
-    border-radius: 4px;
-    padding: 1rem;
-    margin-bottom: 1rem;
+.task_card, .completed_card  {
+    position: relative;
+    margin: 20px;
+    padding: 20px;
+    background-color: yellow;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
-
 .completed_card {
     background-color: #95a5a6; 
     transition: transform 0.3 ease;
@@ -164,7 +179,7 @@ footer h1 {
 #quotes {
     width: auto; 
     background-color: #A2B59F; 
-    color: white;
+    color: black;
     padding: 15px 20px; 
     margin: 20px 0; 
     border-radius: 8px; 
@@ -176,7 +191,6 @@ footer h1 {
     margin: 20px auto; 
     text-align: center;
 }
-
 
 @media (max-width: 768px) {
     header ul {
