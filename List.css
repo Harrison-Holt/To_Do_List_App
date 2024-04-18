@@ -106,6 +106,24 @@ footer {
     margin-top: auto; /* Pushes the footer to the bottom */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
+footer a:hover i {
+    color: #82917F;
+    transform: scale(1.5); 
+}
+footer p {
+    margin: 0;
+}
+i {
+    font-size:36px;
+}
+footer a {
+    text-decoration: none; 
+    color: inherit; 
+    margin-right: 20px;
+}
+footer h1 {
+    margin-right: 20px;
+}
 
 /* button styles */ 
 .task_button {
@@ -116,10 +134,13 @@ footer {
     border-radius: 4px;
     cursor: pointer; 
     margin: 0.5rem;
+    transition: background-color 0.3 ease;
+    transition: transform 0.3 ease;
 }
 
 .task_button:hover {
     background-color: #c0392b;
+    transform: scale(1.05);
 }
 
 /* card styles */ 
@@ -132,8 +153,14 @@ footer {
 
 .completed_card {
     background-color: #95a5a6; 
+    transition: transform 0.3 ease;
+    transition: background-color 0.3 ease;
+    border: none; 
 }
-
+.completed_card:hover {
+    background-color: #778485; 
+    transform: scale(1.05);
+}
 #quotes {
     width: auto; 
     background-color: #A2B59F; 

@@ -55,9 +55,9 @@ main {
 }
 
 .add_task_container {
-    background-color: #ffffff; /* White background for the form */
+    background-color: #ffffff; 
     padding: 20px;
-    border-radius: 5px; /* Added border radius */
+    border-radius: 25px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added shadow for consistency */
     box-sizing: border-box; 
     width: 50%; /* You can adjust width as needed */
@@ -102,7 +102,7 @@ footer a:hover i {
     transform: scale(1.5); 
 }
 footer p {
-    margin: 0; /* Remove default margin */
+    margin: 0;
 }
 i {
     font-size:36px;
