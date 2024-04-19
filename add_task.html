@@ -19,22 +19,22 @@
         </header>
         <main>
         <section class="add_task_container">
-            <form>
+            <form id="taskForm">
                 <label for="task_name">Enter Task Name: </label>
                 <input type="text" id="task_name" required><br><br>
-                <label for="dute_date">Enter Due Date: </label>
+                <label for="due_date">Enter Due Date: </label>
                 <input type="date" id="due_date" required><br><br>
                 <label for="due_time">Enter Due Time: </label>
                 <input type="time" id="due_time" required><br><br>
                 <label for="select_priority">Select Priority: </label>
-                <select name="priority" id="select_priority">
+                <select name="priority" id="select_priority" required>
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
                     <option value="low">Low</option>
                 </select><br><br>
                 <button id="submit_task_info_button">Submit</button>
             </form>
-            <a href="index.html">Cancel?</a>
+            <a href="index.html">Cancel</a>
         </section>
         </main>
         <footer class="d-flex align-items-center justify-content-center p-3">

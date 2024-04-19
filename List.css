@@ -1,5 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
+
+html, body {
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('bulletin.jpg');
+    background-repeat: repeat;
+    background-size: 100%;
+    overflow-y: auto;
+
+}
+header, footer {
+    flex-shrink: 0; 
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Four equal columns */
+    margin: 15px; 
+        flex-grow: 1;
+        padding: 1rem; /* Adds padding inside the main container */
+        overflow-y: visible; /* Default behavior, allows the container to grow vertically as needed */
+}
 /* header styles */ 
 header {
     background-color: #caa478;
@@ -32,16 +65,7 @@ header a:hover {
     color: #82917F;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; 
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background-image: url('bulletin.jpg');
-    background-repeat: repeat;
-    background-size: 100%;
-    }
+
 .add_task_container {
     display: flex; 
     justify-content: space-between; 
@@ -78,23 +102,19 @@ body {
 .title_container p {
     background-color: #789EC5;
     border-radius: 4px;
+    color: white; 
     padding: 0.5rem;
     font-weight: 500;
     color: #2c3e50;
 }
 
-main {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Four equal columns */
-    padding: 1rem;
-    min-height: 100vh;
-}
 
 
 .past_due_items_container, .tasks_today, .later_tasks, .completed_tasks {
     min-height: 150px;
     padding: 15px; 
     list-style: none;
+
 }
 
 /* footer styles */ 
@@ -103,8 +123,9 @@ footer {
     color: black;
     padding: 1rem;
     text-align: center;
-    margin-top: auto; 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+
 }
 i {
     font-size: 36px;
@@ -211,3 +232,6 @@ footer h1 {
         grid-template-columns: 1fr; /* Single column for task containers */
     }
 }
+
+
+

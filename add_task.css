@@ -35,7 +35,7 @@ header li {
 
 header a {
     text-decoration: none;
-    color: white;
+    color: black;
     padding: 10px;
     display: inline-block;
     transition: color 0.3 ease;
@@ -92,7 +92,7 @@ button#submit_task_info_button:hover {
 
 footer {
     background-color: #caa478;
-    color: white;
+    color: black;
     padding: 1rem;
     text-align: center;
     width: 100%;

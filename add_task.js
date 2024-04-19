@@ -1,29 +1,35 @@
-const submit_task_info_button = document.getElementById("submit_task_info_button"); 
-let tasks = JSON.parse(localStorage.getItem('tasks')) || []; 
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('taskForm');
 
-function get_task_info() {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent the default form submission
 
-    const task_name = document.getElementById("task_name").value; 
-    const task_date = document.getElementById("due_date").value;
-    const task_time = document.getElementById("due_time").value; 
-    const priority = document.getElementById("select_priority").value; 
-    const task_completed = false;  
+        const task_name = document.getElementById("task_name").value.trim();
+        const task_date = document.getElementById("due_date").value;
+        const task_time = document.getElementById("due_time").value;
+        const priority = document.getElementById("select_priority").value;
 
-    let id = new Date().getTime(); 
-    let task_info = {task_name, task_date, task_time, priority, id, task_completed}; 
+        // Check if any required field is empty
+        if (!task_name || !task_date || !task_time || !priority) {
+            alert("Please fill out all required fields.");
+            return;  // Stop the function if validation fails
+        }
 
-    return task_info; 
-}
+        const task_info = {
+            task_name, 
+            task_date, 
+            task_time, 
+            priority, 
+            id: new Date().getTime(),  // Unique ID for the task
+            task_completed: false
+        };
 
-submit_task_info_button.addEventListener('click', function(event) {
+        // Retrieve the existing tasks from localStorage
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.push(task_info);  // Add the new task
+        localStorage.setItem('tasks', JSON.stringify(tasks));  // Update localStorage
 
-    event.preventDefault(); 
-    console.log("New task added:", tasks); 
-
-    let task_info = get_task_info(); 
-    tasks.push(task_info); 
-
-    localStorage.setItem('tasks', JSON.stringify(tasks)); 
-    window.location.href='index.html'; 
-
-}); 
+        console.log("New task added:", task_info);  // Log the newly added task
+        window.location.href = 'index.html';  // Redirect after storing the task
+    });
+});
