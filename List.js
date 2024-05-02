@@ -85,13 +85,23 @@ function create_task_card(task) {
     const list_items = document.createElement('li');
     list_items.classList.add('card_info');
     const delete_task_button = document.createElement('button');
-    delete_task_button.classList.add('task_button');
+    delete_task_button.classList.add('delete_button');
     delete_task_button.textContent = 'Delete';
+
     delete_task_button.onclick = function() {
         delete_task(task.id);
-    }
+    };
 
-    list_items.innerHTML = `Name: ${task.task_name}<br> Due Date: ${task.task_date}<br> 
+    const edit_task_button = document.createElement('button');
+    edit_task_button.classList.add('edit_button');
+    edit_task_button.textContent = 'Edit';
+
+    edit_task_button.onclick = function() {
+        window.location.href = `add_task.html?task_id=${task.id}`;
+    };
+    
+
+    list_items.innerHTML = `Name: ${task.task_name}<br> Due Date: ${task.task_date}<br>
     Due Time: ${task.task_time}<br> Priority: ${task.priority}`;
 
     task_card.appendChild(thumbtack);

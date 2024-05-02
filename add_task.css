@@ -7,14 +7,13 @@ body {
     min-height: 100vh;
     align-items: center;
     margin: 0; 
-    background-image: url('bulletin.jpg');
-    background-repeat: repeat;
+    background-color: #caa478;
     background-size: 100%;    
     font-family: 'Roboto', sans-serif;
 }
 
 header {
-    background-color: #caa478;
+    background-color: #FFFFF0;
     width: 100%;
     padding: 1rem 0;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1); /* Adding shadow for consistency */
@@ -91,7 +90,7 @@ button#submit_task_info_button:hover {
 }
 
 footer {
-    background-color: #caa478;
+    background-color: #FFFFF0;
     color: black;
     padding: 1rem;
     text-align: center;

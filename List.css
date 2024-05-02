@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-
 html, body {
     height: 100%; 
     margin: 0;
@@ -15,9 +14,8 @@ body {
     min-height: 100vh; 
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background-image: url('bulletin.jpg');
-    background-repeat: repeat;
     background-size: 100%;
+    background-color: #caa478;
     overflow-y: auto;
 
 }
@@ -35,7 +33,7 @@ main {
 }
 /* header styles */ 
 header {
-    background-color: #caa478;
+    background-color: #FFFFF0  ;
     padding: 1rem 0; 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
@@ -119,7 +117,7 @@ header a:hover {
 
 /* footer styles */ 
 footer {
-    background-color: #caa478;
+    background-color: #FFFFF0;
     color: black;
     padding: 1rem;
     text-align: center;
@@ -148,9 +146,9 @@ footer h1 {
 }
 
 /* button styles */ 
-.task_button {
+.delete_button {
     background-color: #e74c3c;
-    color: white; 
+    color: black; 
     border: none; 
     padding: 5px 10px;
     border-radius: 4px;
@@ -172,8 +170,24 @@ footer h1 {
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.25); /* subtle shadow for depth */
 }
 
-.task_button:hover {
+.delete_button:hover {
     background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+.edit_button {
+    background-color: #fd7e14;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3 ease;
+    transition: transform 0.3 ease;
+}
+
+.edit_button:hover {
+    background-color: #E56B00;
     transform: scale(1.05);
 }
 
@@ -191,6 +205,8 @@ footer h1 {
     background-color: #95a5a6; 
     transition: transform 0.3 ease;
     transition: background-color 0.3 ease;
+    padding: 5px 10px;
+    border-radius: 4px;
     border: none; 
 }
 .completed_card:hover {
