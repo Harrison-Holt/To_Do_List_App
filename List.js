@@ -107,6 +107,7 @@ function create_task_card(task) {
     task_card.appendChild(thumbtack);
     task_card.appendChild(list_items);
     task_card.appendChild(delete_task_button);
+    task_card.appendChild(edit_task_button); 
 
     if (!task.task_completed) {
         const complete_task_button = document.createElement('button');
