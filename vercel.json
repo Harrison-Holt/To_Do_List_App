@@ -1,9 +1,8 @@
 {
-    "rewrites": [
-      {
-        "source": "/to-do-list-app/(.*)",
-        "destination": "/to-do-list-app/$1"
-      }
-    ]
-  }
-  
+  "rewrites": [
+    {
+      "source": "/to-do-list-app/(.*)",
+      "destination": "/$1"
+    }
+  ]
+}
