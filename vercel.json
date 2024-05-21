@@ -1,9 +1,2 @@
-{
-  "rewrites": [
-    {
-      "source": "/to-do-list-app/:path*",
-      "destination": "/:path*"
-    }
-  ]
-}
+
 
