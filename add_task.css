@@ -55,7 +55,7 @@ main {
 }
 
 .add_task_container {
-    background-color: #ffffff; 
+    background-color: #caa478; 
     padding: 20px;
     border-radius: 25px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added shadow for consistency */
