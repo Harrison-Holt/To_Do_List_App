@@ -13,10 +13,9 @@ body {
 }
 
 header {
-    background-color: #FFFFF0;
+    background-color: #caa478;
     width: 100%;
     padding: 1rem 0;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1); /* Adding shadow for consistency */
 }
 
 header ul {
@@ -38,6 +37,8 @@ header a {
     padding: 10px;
     display: inline-block;
     transition: color 0.3 ease;
+    font-size: 24px; 
+    font-family: 'merriweather'; 
 }
 
 header a:hover {
@@ -90,7 +91,7 @@ button#submit_task_info_button:hover {
 }
 
 footer {
-    background-color: #FFFFF0;
+    background-color: #caa478;
     color: black;
     padding: 1rem;
     text-align: center;
