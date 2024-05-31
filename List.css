@@ -29,7 +29,7 @@ main {
     margin: 15px; 
         flex-grow: 1;
         padding: 1rem; /* Adds padding inside the main container */
-        overflow-y: visible; /* Default behavior, allows the container to grow vertically as needed */
+        overflow-y: visible; 
 }
 /* header styles */ 
 header {
