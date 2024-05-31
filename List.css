@@ -164,12 +164,12 @@ footer h1 {
 
 .thumbtack {
     position: absolute;
-    top: 10px;  /* adjust as needed */
+    top: 10px;  
     left: 50%;  /* centers the thumbtack horizontally on the card */
     transform: translateX(-50%);
     width: 12px;
     height: 12px;
-    background-color: green; /* thumbtack color */
+    background-color: green; 
     border-radius: 50%;
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.25); /* subtle shadow for depth */
 }
