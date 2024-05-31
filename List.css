@@ -33,7 +33,7 @@ main {
 }
 /* header styles */ 
 header {
-    background-color: #FFFFF0  ;
+    background-color: #caa478;
     padding: 1rem 0; 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
@@ -117,7 +117,7 @@ header a:hover {
 
 /* footer styles */ 
 footer {
-    background-color: #FFFFF0;
+    background-color: #caa478;
     color: black;
     padding: 1rem;
     text-align: center;
