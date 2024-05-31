@@ -107,7 +107,12 @@ main {
 }
 
 
-
+p {
+    font-family: 'cardo'; 
+    font-size: 15px;
+    line-height: 120%; 
+    mac-char: 90ch; 
+}
 .past_due_items_container, .tasks_today, .later_tasks, .completed_tasks {
     min-height: 150px;
     padding: 15px; 
