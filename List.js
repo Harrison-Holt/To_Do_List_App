@@ -30,7 +30,7 @@ function export_tasks(tasks) {
         y += 10;
         doc.text(10, y, `Priority: ${task.priority}`);
         y += 10;
-        doc.text(10, y, `Status: ${task.task_completed}`);
+        doc.text(10, y, `Completed: ${task.task_completed}`);
         y += 20;
     }); 
 
