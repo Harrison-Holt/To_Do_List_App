@@ -20,7 +20,7 @@ export_task_button.addEventListener('click', function() {
 function export_tasks(tasks) {
 
     const doc = new jsPDF(); 
-    const y = 10; 
+    let y = 10; 
     tasks.forEach(task => {
         doc.text(10, y , `Task: ${task.task_name}`); 
         doc.text(10, y , `Due: ${task.task_date}`); 
