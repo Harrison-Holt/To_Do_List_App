@@ -1,4 +1,5 @@
 let tasks_list = []; 
+const { jsPDF } = window.jspdf; 
 
 // function to retrieve tasks from localStorage 
 function get_tasks() {
@@ -15,23 +16,23 @@ add_task_button.addEventListener('click', function() {
 }); 
 
 export_task_button.addEventListener('click', function() {
-    export_tasks(); 
+    export_tasks(tasks); 
 }); 
 
-function export_tasks() {
+function export_tasks(tasks) {
 
-     
-    let json_tasks = JSON.stringify(tasks_list, null, 2); 
-    let blob = new Blob([json_tasks], { type: 'application/json'}); 
-    let url = URL.createObjectURL(blob); 
-    let a = document.createElement('a'); 
+    const doc = new jsPDF(); 
+    const y = 10; 
+    tasks.forEach(task => {
+        doc.text(10, y , `Task: ${task.task_name}`); 
+        doc.text(10, y , `Due: ${task.task_date}`); 
+        doc.text(10, y , `Time: ${task.task_time}`); 
+        doc.text(10, y , `Priority: ${task.priority}`); 
+        doc.text(10, y , `Status: ${task.task_completed}`); 
+        y += 30; 
+    }); 
 
-    a.href = url; 
-    a.download = 'tasks_list.json'; 
-
-    document.body.appendChild(a); 
-    a.click(); 
-    document.body.removeChild(a); 
+    doc.save('tasks.pdf'); 
 }
 
 // function to delete task card from localStorage/List
