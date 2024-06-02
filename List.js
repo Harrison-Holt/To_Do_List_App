@@ -22,12 +22,16 @@ function export_tasks(tasks) {
     const doc = new jsPDF(); 
     let y = 10; 
     tasks.forEach(task => {
-        doc.text(10, y , `Task: ${task.task_name}`); 
-        doc.text(10, y , `Due: ${task.task_date}`); 
-        doc.text(10, y , `Time: ${task.task_time}`); 
-        doc.text(10, y , `Priority: ${task.priority}`); 
-        doc.text(10, y , `Status: ${task.task_completed}`); 
-        y += 30; 
+        doc.text(10, y, `Task: ${task.task_name}`);
+        y += 10;
+        doc.text(10, y, `Due: ${task.task_date}`);
+        y += 10;
+        doc.text(10, y, `Time: ${task.task_time}`);
+        y += 10;
+        doc.text(10, y, `Priority: ${task.priority}`);
+        y += 10;
+        doc.text(10, y, `Status: ${task.task_completed}`);
+        y += 20;
     }); 
 
     doc.save('tasks.pdf'); 
