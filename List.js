@@ -14,7 +14,9 @@ const export_task_button = document.getElementById("export_task_button");
 add_task_button.addEventListener('click', function() {
     window.location.href = 'add_task.html'; 
 }); 
-
+export_task_button.addEventListener('click', function() {
+    export_tasks(tasks_list); 
+}); 
 function export_tasks(tasks) {
 
     const doc = new jsPDF(); 
@@ -240,9 +242,7 @@ function displayQuote(quote, author) {
     quoteElement.innerHTML = `"${quote}"<br> -${author}`;
     document.getElementById("quotes").appendChild(quoteElement);
 }
-export_task_button.addEventListener('click', function() {
-    export_tasks(tasks); 
-}); 
+
 get_quote_of_the_day();
 get_past_due_items(); 
 get_tasks_due_today(); 
