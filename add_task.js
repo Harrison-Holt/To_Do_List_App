@@ -53,26 +53,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         localStorage.setItem('tasks', JSON.stringify(tasks));  // Update localStorage
-        send_task_to_db(tasks); 
+        send_task_to_db(task_info);  // Send only the new/updated task to the server
 
         console.log("Task saved:", task_info);  // Log the saved or updated task
         window.location.href = 'index.html';  // Redirect after storing the task
     });
 });
 
-function send_task_to_db(tasks) {
+function send_task_to_db(task) {
     fetch('https://hhportfolio.great-site.net/CRUD.php', {
-        method: 'POST', 
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }, 
-        body: JSON.stringify(tasks)
-    }) 
+        },
+        body: JSON.stringify(task)  // Send only the single task object
+    })
     .then(response => response.json())
     .then(data => {
-        console.log("Success: ", data); 
+        console.log("Success: ", data);
     })
     .catch(error => {
-        console.error("Error!", error); 
+        console.error("Error!", error);
     });
 }
