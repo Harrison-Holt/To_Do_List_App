@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function send_task_to_db(task) {
-    fetch('https://hhportfolio.great-site.net/To-DO_List/CRUD.php', {
+    fetch('https://hhportfolio.great-site.net/To-Do_List/CRUD.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
