@@ -40,8 +40,6 @@ function export_tasks(tasks) {
 // function to delete task card from localStorage/List
 function delete_task(task_id) {
 
-     
-
     tasks_list = tasks_list.filter(task => task_id !== task.id); 
 
     localStorage.setItem('tasks', JSON.stringify(tasks_list)); 
