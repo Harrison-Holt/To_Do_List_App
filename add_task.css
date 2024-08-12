@@ -13,7 +13,7 @@ body {
 }
 
 header {
-    background-color: #caa478;
+    background-color: #a77f5a;
     width: 100%;
     padding: 1rem 0;
 }
@@ -90,7 +90,7 @@ button#submit_task_info_button:hover {
 }
 
 footer {
-    background-color: #caa478;
+    background-color: #a77f5a;
     color: black;
     padding: 1rem;
     text-align: center;
