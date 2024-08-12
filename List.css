@@ -46,7 +46,7 @@ body {
     margin: 0;
     font-family: 'Cardo';
     background-size: 100%;
-    background-color: #caa478;
+    background-color: #b89b72;
     overflow-y: auto;
 
 }
@@ -122,7 +122,7 @@ p {
 
 /* footer styles */ 
 footer {
-    background-color: #caa478;
+    background-color: #b89b72;
     color: black;
     padding: 1rem;
     text-align: center;
