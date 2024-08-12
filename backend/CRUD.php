@@ -1,6 +1,6 @@
 <?php
-require 'config.inc.php'; // Include your database configuration
-
+require 'config.inc.php'; 
+   
 // Get the raw POST data
 $rawData = file_get_contents("php://input");
 $task = json_decode($rawData, true);

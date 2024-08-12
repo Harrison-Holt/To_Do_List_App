@@ -71,10 +71,10 @@ function get_formatted_date() {
     let current_day = new Date(); 
     current_day.setHours(0,0,0,0); 
     
-    return current_day.getFullYear() + '-' 
-    + ('0' + (current_day.getMonth() + 1)).slice(-2)
-    + '-' + ('0' + (current_day.getDate())).slice(-2);
+    return  ('0' + (current_day.getMonth() + 1)).slice(-2)
+    + '-' + ('0' + (current_day.getDate())).slice(-2) + '-' + current_day.getFullYear(); 
 }
+console.log(get_formatted_date()); // Output: "08-12-2024"
 
 // function to create the task card 
 function create_task_card(task) {
