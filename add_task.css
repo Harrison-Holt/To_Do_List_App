@@ -97,7 +97,7 @@ footer {
     width: 100%;
 }
 footer a:hover i {
-    color: #82917F;
+    color: #fff;
     transform: scale(1.5); 
 }
 footer p {
