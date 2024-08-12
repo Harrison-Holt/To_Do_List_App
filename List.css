@@ -92,7 +92,6 @@ main {
 .title_container {
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     gap: 10px;
     margin: 0 1rem; 
     text-align: center; 
@@ -104,6 +103,7 @@ main {
     color: white; 
     padding: 0.5rem;
     font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     color: #2c3e50;
 }
 
