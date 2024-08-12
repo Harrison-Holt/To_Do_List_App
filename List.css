@@ -92,6 +92,7 @@ main {
 .title_container {
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     gap: 10px;
     margin: 0 1rem; 
     text-align: center; 
@@ -224,7 +225,7 @@ footer h1 {
     padding: 15px 20px; 
     margin: 20px 0; 
     border-radius: 8px; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     font-size: 25px; 
     max-width: 80%;
     display: block; 
