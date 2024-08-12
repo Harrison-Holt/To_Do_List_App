@@ -42,7 +42,7 @@ header a {
 }
 
 header a:hover {
-    color: #82917F;
+    color: #fff;
 }
 
 main {
@@ -55,7 +55,7 @@ main {
 }
 
 .add_task_container {
-    background-color: #caa478; 
+    background-color: #b89b72; 
     padding: 20px;
     border-radius: 25px;
     box-sizing: border-box; 
