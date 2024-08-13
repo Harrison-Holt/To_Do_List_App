@@ -52,6 +52,7 @@ body {
 }
 header, footer {
     flex-shrink: 0; 
+    font-family: 'Merriweather'; 
 }
 
 main {
