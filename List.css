@@ -103,7 +103,7 @@ main {
     border-radius: 4px;
     color: white; 
     padding: 0.5rem;
-    font-weight: 500;
+    font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     color: #2c3e50;
 }
