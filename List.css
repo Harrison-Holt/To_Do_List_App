@@ -99,7 +99,7 @@ main {
 }
 
 .title_container p {
-    background-color: #789EC5;
+    background-color: #9ab7d3;
     border-radius: 4px;
     color: white; 
     padding: 0.5rem;
@@ -113,7 +113,7 @@ p {
     font-family: 'cardo'; 
     font-size: 15px;
     line-height: 120%; 
-    mac-char: 90ch; 
+    max-width: 90ch; 
 }
 .past_due_items_container, .tasks_today, .later_tasks, .completed_tasks {
     min-height: 150px;
