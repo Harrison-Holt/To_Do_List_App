@@ -80,7 +80,7 @@ main {
     padding: 10px 15px;
     border-radius: 4px;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: bold;
     transition: background-color 0.5 ease;
     transition: transform 0.3 ease;
 }
@@ -99,13 +99,12 @@ main {
 }
 
 .title_container p {
-    background-color: #9ab7d3;
+    background-color: #759CC2;
     border-radius: 4px;
-    color: white; 
+    color: black; 
     padding: 0.5rem;
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    color: #2c3e50;
 }
 
 
