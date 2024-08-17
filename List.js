@@ -83,7 +83,7 @@ function create_task_card(task) {
     const thumbtack = document.createElement('div');
     thumbtack.classList.add('thumbtack');
     
-    const list_items = document.createElement('li');
+    const list_items = document.createElement('p');
     list_items.classList.add('card_info');
     const delete_task_button = document.createElement('button');
     delete_task_button.classList.add('delete_button');
