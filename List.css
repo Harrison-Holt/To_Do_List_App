@@ -7,6 +7,10 @@ html, body {
     overflow-x: hidden; 
 }
 
+button:focus, a:focus {
+    outline: 3px solid #fff; 
+    outline-offset: 2px; 
+}
 /* header styles */ 
 header {
     background-color: #a77f5a;
@@ -14,17 +18,7 @@ header {
 }
 header h1 {
     color: black; 
-}
-header ul {
-    display: flex; 
-    justify-content: space-around;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-header li {
-    display: inline; 
+    margin-top: 10px;
 }
 
 header a {
@@ -32,6 +26,7 @@ header a {
     color: black;
     padding: 10px;
     font-size: 36px;
+    display: block;
 }
 
 header a:hover {
@@ -151,7 +146,7 @@ footer h1 {
 /* button styles */ 
 .delete_button {
     background-color: #e74c3c;
-    color: white; 
+    color: black; 
     border: none; 
     padding: 5px 10px;
     border-radius: 4px;
@@ -180,7 +175,7 @@ footer h1 {
 
 .edit_button {
     background-color: #fd7e14;
-    color: white;
+    color: black;
     border: none;
     padding: 5px 10px;
     border-radius: 4px;
@@ -209,7 +204,7 @@ footer h1 {
     transition: transform 0.3 ease;
     transition: background-color 0.3 ease;
     padding: 5px 10px;
-    color: white; 
+    color: black; 
     border-radius: 4px;
     border: none; 
 }
