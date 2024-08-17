@@ -75,16 +75,23 @@ input, select, button {
     box-sizing: border-box;
 }
 
-button#submit_task_info_button {
+button:focus, a:focus {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+#cancel_button {
+    color: #023179; 
+}
+#submit_task_info_button {
     background-color: #A2B59F;
-    color: white; 
+    color: black; 
     cursor: pointer;
     border: none;
     transition: background-color 0.3 ease;
     transition: transform 0.3 ease;
 }
 
-button#submit_task_info_button:hover {
+#submit_task_info_button:hover {
     background-color: #82917F;
     transform: scale(1.05);
 }
