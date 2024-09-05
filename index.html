@@ -1,65 +1,67 @@
 <!DOCTYPE html>
-<html lang="en"> 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <title> To-Do List </title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <link rel="stylesheet" href="List.css">
-    </head>
-    <body class="d-flex flex-column vh-100">
-        <header class="d-flex flex-row justify-content-around p-3">
-                <h1>To-Do List</h1>
-                <a href="https://www.harrisonholt.dev/" aria-label="Return to Harrison's Portfolio Homepage">Home Page</a>
-        </header>
-        <section class="add_task_container d-flex flex-row justify-content-around p-3 m-5">
-           <button id="add_task_button">Add Task</button>
-            <span id="quotes">Quote of the Day: </span>
-            <button id="export_task_button">Export Tasks</button>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="container-fluid p-0">
+    <header class="container-fluid">
+        <section class="row justify-content-center align-items-center">
+            <h1 class="col-9">To-Do List</h1>
+            <a href="https://www.harrisonholt.dev/" class="col-3 text-end">Homepage</a>
         </section>
-        <section class="title_container d-flex flex-row justify-content-around">
-            <p>Tasks past due: </p>
-            <p>Tasks due today: </p>
-            <p>Tasks due later: </p>
-            <p>Tasks completed: </p>
+    </header>
+    <main class="container-fluid min-vh-100">
+        <section class="add_task_container row mt-5 d-flex justify-content-center align-items-center">
+\            <button id="add_task_button" class="btn btn-primary btn-sm col-2 m-2">Add Task</button>
+            <span id="quotes" class="col-auto text-center m-2">Quote of the Day:</span>
+            <button id="export_task_button" class="btn btn-secondary btn-sm col-2 m-2">Export Tasks</button>
+        </section>    
+
+        <section class="title_container row mt-5">
+            <div class="col-12 d-flex flex-row justify-content-around">
+            <p class="text-center m-2 p-2">Tasks past due:</p>
+            <p class="text-center m-2 p-2">Tasks due today:</p>
+            <p class="text-center m-2 p-2">Tasks due later:</p>
+            <p class="text-center m-2 p-2">Tasks completed:</p>
+            </div>
         </section>
 
-        <main class="display_all_tasks_container">
+        <section class="row display_all_tasks_container">
 
-            <section class="past_due_items_container">
+            <section class="col-3 past_due_items_container"></section>
+            
+            <section class="col-3 tasks_today"></section>
 
-            </section>
-        
-            <section class="tasks_today">
-            Tasks Due Today: 
+            <section class="col-3 later_tasks"></section>
 
-            </section>
-            <section class="later_tasks">
-                <div id="later_tasks_container">
-                    The Tasks Due Later...
-                </div>
-            </section>
-            <section class="completed_tasks">
-                <div id="completed_tasks_container">
-                    The Tasks Completed...
-                </div>
+            <section class="col-3 completed_tasks"></section>
+            
             </section>
         </main>
-        <footer class="d-flex align-items-center justify-content-center p-3">
-            <h1 style="margin-right: 20px;" style="font-size:16px;">Let's Connect!</h1>
-            <a href="https://github.com/Harrison-Holt" style="text-decoration: none; color: inherit; margin-right: 20px;" aria-label="Visit Harrison's GitHub profile" title="Visit Harrison's GitHub profile">
-                <i class="fab fa-github" style="font-size:36px;"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/harrison-holt-18a703202" style="text-decoration: none; color: inherit; margin-right: 20px;" aria-label="Visit Harrison's LinkedIn profile" title="Visit Harrison's LinkedIn profile">
-                <i class="fab fa-linkedin" style="font-size:36px;"></i>
-            </a>
-            <a href="mailto:hholt2901@gmail.com" style="text-decoration: none; color: inherit;" aria-label="Send an email to Harrison" title="Send an email to Harrison">
-                <i class="fa fa-envelope" style="font-size:36px;"></i>
-            </a>        
-        </footer>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-        <script src="List.js"></script>
-    </body>
+
+        <footer class="container-fluid p-3">
+            <section class="row footer_section">
+            <section class="col-12 d-flex flex-row justify-content-center align-items-center">
+                <h1 style="font-size:36px;">Let's Connect!</h1>
+                <a href="https://github.com/Harrison-Holt"  aria-label="Visit Harrison's GitHub profile" title="Visit Harrison's GitHub profile">
+                    <i class="fab fa-github" style="font-size:36px;"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/harrison-holt-18a703202" aria-label="Visit Harrison's LinkedIn profile" title="Visit Harrison's LinkedIn profile">
+                    <i class="fab fa-linkedin" style="font-size:36px;"></i>
+                </a>
+                <a href="mailto:hholt2901@gmail.com" aria-label="Send an email to Harrison" title="Send an email to Harrison">
+                    <i class="fa fa-envelope" style="font-size:36px;"></i>
+                </a> 
+            </section>
+            </section>   
+       </footer>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+       <script src="List.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ON5lZ5Itg5s9iLhzLUW+GYB3mHFc/lbTm9fr4NUv0F3/whlz0f6bhBajzz3Q39aG" crossorigin="anonymous"></script>
+</body>
 </html>

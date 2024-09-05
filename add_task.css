@@ -7,13 +7,13 @@ body {
     min-height: 100vh;
     align-items: center;
     margin: 0; 
-    background-color: #b89b72;
-    background-size: 100%;    
+    background-image: url("./bulletin.png");
+    background-size: cover;
     font-family: 'Roboto', sans-serif;
 }
 
 header {
-    background-color: #a77f5a;
+    background-color: #b89b72;
     width: 100%;
     padding: 1rem 0;
 }
@@ -55,7 +55,7 @@ main {
 }
 
 .add_task_container {
-    background-color: #b89b72; 
+    background-color: #b89b72;
     padding: 20px;
     border-radius: 25px;
     box-sizing: border-box; 
@@ -97,7 +97,7 @@ button:focus, a:focus {
 }
 
 footer {
-    background-color: #a77f5a;
+    background-color: #b89b72;
     color: black;
     padding: 1rem;
     text-align: center;
