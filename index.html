@@ -11,44 +11,43 @@
 <body class="container-fluid p-0">
     <header class="container-fluid">
         <section class="row justify-content-center align-items-center">
-            <h1 class="col-9">To-Do List</h1>
+            <h1 class="col-9 text-start">To-Do List</h1>
             <a href="https://www.harrisonholt.dev/" class="col-3 text-end">Homepage</a>
         </section>
     </header>
     <main class="container-fluid min-vh-100">
         <section class="add_task_container row mt-5 d-flex justify-content-center align-items-center">
-\            <button id="add_task_button" class="btn btn-primary btn-sm col-2 m-2">Add Task</button>
+            <button id="add_task_button" class="btn btn-primary btn-sm col-2 m-2">
+                <i class="fas fa-plus-circle"></i> Add Task
+            </button>
             <span id="quotes" class="col-auto text-center m-2">Quote of the Day:</span>
-            <button id="export_task_button" class="btn btn-secondary btn-sm col-2 m-2">Export Tasks</button>
+            <button id="export_task_button" class="btn btn-secondary btn-sm col-2 m-2">
+                <i class="fas fa-file-export"></i> Export Tasks
+            </button>
         </section>    
 
         <section class="title_container row mt-5">
             <div class="col-12 d-flex flex-row justify-content-around">
-            <p class="text-center m-2 p-2">Tasks past due:</p>
-            <p class="text-center m-2 p-2">Tasks due today:</p>
-            <p class="text-center m-2 p-2">Tasks due later:</p>
-            <p class="text-center m-2 p-2">Tasks completed:</p>
+                <p class="text-center m-2 p-2">Tasks past due:</p>
+                <p class="text-center m-2 p-2">Tasks due today:</p>
+                <p class="text-center m-2 p-2">Tasks due later:</p>
+                <p class="text-center m-2 p-2">Tasks completed:</p>
             </div>
         </section>
 
         <section class="row display_all_tasks_container">
-
             <section class="col-3 past_due_items_container"></section>
-            
             <section class="col-3 tasks_today"></section>
-
             <section class="col-3 later_tasks"></section>
-
             <section class="col-3 completed_tasks"></section>
-            
-            </section>
-        </main>
+        </section>
+    </main>
 
-        <footer class="container-fluid p-3">
-            <section class="row footer_section">
+    <footer class="container-fluid p-3">
+        <section class="row footer_section">
             <section class="col-12 d-flex flex-row justify-content-center align-items-center">
                 <h1 style="font-size:36px;">Let's Connect!</h1>
-                <a href="https://github.com/Harrison-Holt"  aria-label="Visit Harrison's GitHub profile" title="Visit Harrison's GitHub profile">
+                <a href="https://github.com/Harrison-Holt" aria-label="Visit Harrison's GitHub profile" title="Visit Harrison's GitHub profile">
                     <i class="fab fa-github" style="font-size:36px;"></i>
                 </a>
                 <a href="https://www.linkedin.com/in/harrison-holt-18a703202" aria-label="Visit Harrison's LinkedIn profile" title="Visit Harrison's LinkedIn profile">
@@ -58,10 +57,11 @@
                     <i class="fa fa-envelope" style="font-size:36px;"></i>
                 </a> 
             </section>
-            </section>   
-       </footer>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-       <script src="List.js"></script>
+        </section>   
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="List.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ON5lZ5Itg5s9iLhzLUW+GYB3mHFc/lbTm9fr4NUv0F3/whlz0f6bhBajzz3Q39aG" crossorigin="anonymous"></script>
 </body>
 </html>
+

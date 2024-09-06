@@ -1,30 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-/* Gobal Styles */ 
+/* Global Styles */ 
 body {
-font-family: 'Cardo';
-background-image: url("./bulletin.png");
-background-size: cover;
-overflow-x: hidden;
+    font-family: 'Roboto', sans-serif;
+    background-image: url("./bulletin.png");
+    background-size: cover;
+    overflow-x: hidden;
 }
 
 /* Header Styles */ 
 header {
     background-color: #b89b72;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
-    color: black; 
-    margin-top: 10px;
+header h1, header a {
+    text-align: center;
+    margin: 0;
 }
 
 header a {
     text-decoration: none;
     color: black;
     padding: 10px;
-    font-size: 36px;
-    display: block;
+    font-size: 24px;
 }
+
 header a:hover {
     color: #fff;
 }
@@ -34,22 +36,21 @@ footer {
     background-color: #b89b72;
     color: black;
     text-align: center;
+    padding: 10px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
 }
+
 footer a:hover i {
     color: #fff;
-    transform: scale(1.5); 
+    transform: scale(1.2); 
 }
-footer p {
-    margin: 0;
-}
-i {
-    font-size:36px;
-}
+
 footer a {
     text-decoration: none; 
     color: inherit; 
     margin-right: 20px;
 }
+
 footer h1 {
     margin-right: 20px;
 }
@@ -61,11 +62,10 @@ footer h1 {
     color: black; 
     border: none; 
     padding: 10px 15px;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    border-radius: 50px;
+    font-size: 1rem;
     font-weight: bold;
-    transition: background-color 0.5 ease;
-    transition: transform 0.3 ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 #add_task_button:hover, #export_task_button:hover {
@@ -73,54 +73,8 @@ footer h1 {
     transform: scale(1.05);
 }
 
-/* button styles */ 
-.delete_button {
-    background-color: #e74c3c;
-    color: black; 
-    border: none; 
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer; 
-    margin: 0.5rem;
-    transition: background-color 0.3 ease;
-    transition: transform 0.3 ease;
-}
-
-.thumbtack {
-    position: absolute;
-    top: 10px;  
-    left: 50%;  /* centers the thumbtack horizontally on the card */
-    transform: translateX(-50%);
-    width: 12px;
-    height: 12px;
-    background-color: green; 
-    border-radius: 50%;
-    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.25); /* subtle shadow for depth */
-}
-
-.delete_button:hover {
-    background-color: #c0392b;
-    transform: scale(1.05);
-}
-
-.edit_button {
-    background-color: #fd7e14;
-    color: black;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3 ease;
-    transition: transform 0.3 ease;
-}
-
-.edit_button:hover {
-    background-color: #E56B00;
-    transform: scale(1.05);
-}
-
-/* card styles */ 
-.task_card, .completed_card  {
+/* Task Card Styles */ 
+.task_card, .completed_card {
     position: relative;
     margin: 20px;
     padding: 20px;
@@ -129,15 +83,12 @@ footer h1 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
+
 .completed_card {
     background-color: #95a5a6; 
-    transition: transform 0.3 ease;
-    transition: background-color 0.3 ease;
-    padding: 5px 10px;
-    color: black; 
-    border-radius: 4px;
-    border: none; 
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
 .completed_card:hover {
     background-color: #778485; 
     transform: scale(1.05);
@@ -149,7 +100,7 @@ footer h1 {
     color: black; 
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    margin: 1px; 
+    margin: 5px; 
 }
 
 #quotes {
@@ -160,15 +111,9 @@ footer h1 {
     margin: 20px 0; 
     border-radius: 8px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    font-size: 25px; 
+    font-size: 20px; 
     max-width: 80%;
-    display: block; 
-    margin: 20px auto; 
     text-align: center;
+    margin: 20px auto; 
 }
 
-#quote p {
-    font-style: italic; 
-    font-size: 16px; 
-    line-height: 120%; 
-}
