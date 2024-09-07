@@ -1,119 +1,101 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts..com/css2?family=Merriweather:wght@400;500;700&family=Cardo:wght@400;700&display=swap');
 
-/* Global Styles */ 
+/* Gobal Styles */ 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-image: url("./bulletin.png");
-    background-size: cover;
+    background-color: #0A0A0A;
     overflow-x: hidden;
 }
-
-/* Header Styles */ 
+/* Header Styles */
 header {
-    background-color: #b89b72;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #70BEBC;
+    position: sticky;
 }
 
-header h1, header a {
-    text-align: center;
-    margin: 0;
+header h1 {
+    font-family: 'Merriweather'; 
+    font-size: 36px;
+    padding: 0;
 }
-
 header a {
+    font-family: 'Merriweather'; 
     text-decoration: none;
-    color: black;
-    padding: 10px;
     font-size: 24px;
+    color: #fff;
 }
 
 header a:hover {
-    color: #fff;
-}
-
-/* Footer Styles */ 
-footer {
-    background-color: #b89b72;
-    color: black;
-    text-align: center;
-    padding: 10px;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-}
-
-footer a:hover i {
-    color: #fff;
-    transform: scale(1.2); 
-}
-
-footer a {
-    text-decoration: none; 
-    color: inherit; 
-    margin-right: 20px;
-}
-
-footer h1 {
-    margin-right: 20px;
-}
-
-/* Button Styles */ 
-#add_task_button, #export_task_button {
-    cursor: pointer;
-    background-color: #A2B59F;
-    color: black; 
-    border: none; 
-    padding: 10px 15px;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-#add_task_button:hover, #export_task_button:hover {
-    background-color: #82917F;
-    transform: scale(1.05);
-}
-
-/* Task Card Styles */ 
-.task_card, .completed_card {
-    position: relative;
-    margin: 20px;
-    padding: 20px;
-    background-color: #FEFF9C;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-.completed_card {
-    background-color: #95a5a6; 
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.completed_card:hover {
-    background-color: #778485; 
-    transform: scale(1.05);
-}
-
-.title_container p {
-    background-color: #759CC2;
-    border-radius: 4px;
-    color: black; 
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    margin: 5px; 
+    color: white; 
 }
 
 #quotes {
-    width: auto; 
-    background-color: #A2B59F; 
-    color: black;
-    padding: 15px 20px; 
-    margin: 20px 0; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    font-size: 20px; 
-    max-width: 80%;
-    text-align: center;
-    margin: 20px auto; 
+    background-color: #3A3A3A;
+    border-radius: 50%; 
+    padding: 25px;
+    color: #fff
 }
 
+.task_card {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.task_card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card_info {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 8px 12px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete_button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.delete_button:hover {
+    background-color: #c82333;
+}
+
+.edit_button {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.edit_button:hover {
+    background-color: #e0a800;
+}
+
+.completed_card {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.completed_card:hover {
+    background-color: #218838;
+}
+
+.task_card.completed {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+button {
+    margin: 10px; 
+}

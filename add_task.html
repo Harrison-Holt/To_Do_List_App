@@ -10,44 +10,58 @@
         <link rel="stylesheet" href="add_task.css">
     </head>
     <body>
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="https://www.harrisonholt.dev/"">Home Page</a></li>
-                </ul>
-            </nav>
+        <header class="bg-dark text-white mb-3 p-3 d-flex flex-row align-items-center justify-content-between">
+            <h1 class="m-0">To-Do List</h1>
+            <div class="portfolio_sections">
+                <nav>
+                    <a href="index.html">Home</a>
+                </nav>
+            </div>
         </header>
-        <main>
-        <section class="add_task_container">
-            <form id="taskForm">
-                <label for="task_name">Enter Task Name: </label>
-                <input type="text" id="task_name" required><br><br>
-                <label for="due_date">Enter Due Date: </label>
-                <input type="date" id="due_date" required><br><br>
-                <label for="due_time">Enter Due Time: </label>
-                <input type="time" id="due_time" required><br><br>
-                <label for="select_priority">Select Priority: </label>
-                <select name="priority" id="select_priority" required>
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                </select><br><br>
-                <button id="submit_task_info_button">Submit</button>
-            </form>
-            <a href="index.html" id="cancel_button">Cancel</a>
-        </section>
-        </main>
-        <footer class="d-flex align-items-center justify-content-center p-3">
-            <h1 style="margin-right: 20px;">Let's Connect!</h1>
-            <a href="https://github.com/Harrison-Holt" style="text-decoration: none; color: inherit; margin-right: 20px;" aria-label="Visit Harrison's GitHub profile" title="Visit Harrison's GitHub profile">
-                <i class="fab fa-github" style="font-size:36px;"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/harrison-holt-18a703202" style="text-decoration: none; color: inherit; margin-right: 20px;" aria-label="Visit Harrison's LinkedIn profile" title="Visit Harrison's LinkedIn profile">
-                <i class="fab fa-linkedin" style="font-size:36px;"></i>
-            </a>
-            <a href="mailto:hholt2901@gmail.com" style="text-decoration: none; color: inherit;" aria-label="Send an email to Harrison" title="Send an email to Harrison">
-                <i class="fa fa-envelope" style="font-size:36px;"></i>
-            </a>        
+        <main class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
+            <section class="add_task_container w-50">
+                <form id="taskForm" class="p-4 rounded shadow bg-light">
+                    <div class="mb-3">
+                        <label for="task_name" class="form-label">Enter Task Name:</label>
+                        <input type="text" id="task_name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="due_date" class="form-label">Enter Due Date:</label>
+                        <input type="date" id="due_date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="due_time" class="form-label">Enter Due Time:</label>
+                        <input type="time" id="due_time" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="select_priority" class="form-label">Select Priority:</label>
+                        <select name="priority" id="select_priority" class="form-select" required>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button id="submit_task_info_button" class="btn btn-primary">Submit</button>
+                        <a href="index.html" id="cancel_button" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </section>
+        </main>        
+        <footer class="bg-dark text-white p-4 mt-5">
+            <div class="d-flex justify-content-center align-items-center gap-3">
+                <h2>Let's Connect!</h2>
+                <a href="https://github.com/Harrison-Holt" class="text-white" aria-label="Visit Harrison's GitHub profile" title="Visit Harrison's GitHub profile">
+                    <i class="fab fa-github fa-2x"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/harrison-holt-18a703202" class="text-white" aria-label="Visit Harrison's LinkedIn profile" title="Visit Harrison's LinkedIn profile">
+                    <i class="fab fa-linkedin fa-2x"></i>
+                </a>
+                <a href="mailto:hholt2901@gmail.com" class="text-white" aria-label="Send an email to Harrison" title="Send an email to Harrison">
+                    <i class="fa fa-envelope fa-2x"></i>
+                </a> 
+            </div>
+        </footer>     
         </footer>
         <script src="add_task.js"></script>
     </body>

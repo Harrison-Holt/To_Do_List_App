@@ -9,56 +9,88 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body class="container-fluid p-0">
-    <header class="container-fluid">
-        <section class="row justify-content-center align-items-center">
-            <h1 class="col-9 text-start">To-Do List</h1>
-            <a href="https://www.harrisonholt.dev/" class="col-3 text-end">Homepage</a>
-        </section>
+    <header class="bg-dark text-white mb-3 p-3 d-flex flex-row align-items-center justify-content-between">
+        <h1 class="m-0">To-Do List</h1>
+        <div class="portfolio_sections">
+            <nav>
+                <a href="https://www.harrisonholt.dev/">Home</a>
+            </nav>
+        </div>
     </header>
-    <main class="container-fluid min-vh-100">
-        <section class="add_task_container row mt-5 d-flex justify-content-center align-items-center">
-            <button id="add_task_button" class="btn btn-primary btn-sm col-2 m-2">
-                <i class="fas fa-plus-circle"></i> Add Task
-            </button>
-            <span id="quotes" class="col-auto text-center m-2">Quote of the Day:</span>
-            <button id="export_task_button" class="btn btn-secondary btn-sm col-2 m-2">
-                <i class="fas fa-file-export"></i> Export Tasks
-            </button>
-        </section>    
+    
+    
+    <section class="add_task_container row mt-5 d-flex justify-content-center align-items-center">
+        <button id="add_task_button" class="btn btn-primary btn-lg col-2 m-2 shadow">
+            <i class="fas fa-plus-circle"></i> Add Task
+        </button>
+        <span id="quotes" class="col-auto text-center m-2">Quote of the Day:</span>
+        <button id="export_task_button" class="btn btn-secondary btn-lg col-2 m-2 shadow">
+            <i class="fas fa-file-export"></i> Export Tasks
+        </button>
+    </section>
+      
+        <main class="container-fluid min-vh-100">
 
-        <section class="title_container row mt-5">
-            <div class="col-12 d-flex flex-row justify-content-around">
-                <p class="text-center m-2 p-2">Tasks past due:</p>
-                <p class="text-center m-2 p-2">Tasks due today:</p>
-                <p class="text-center m-2 p-2">Tasks due later:</p>
-                <p class="text-center m-2 p-2">Tasks completed:</p>
-            </div>
-        </section>
-
-        <section class="row display_all_tasks_container">
-            <section class="col-3 past_due_items_container"></section>
-            <section class="col-3 tasks_today"></section>
-            <section class="col-3 later_tasks"></section>
-            <section class="col-3 completed_tasks"></section>
-        </section>
+            <section class="row mt-5">
+                <div class="col-md-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-danger text-white">
+                            Tasks Past Due <span class="badge bg-light text-dark"></span>
+                        </div>
+                        <div class="card-body past_due_items_container">
+                            <!-- Past due tasks will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-warning text-white">
+                            Tasks Due Today <span class="badge bg-light text-dark"></span>
+                        </div>
+                        <div class="card-body tasks_today">
+                            <!-- Today's tasks will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-info text-white">
+                            Tasks Due Later <span class="badge bg-light text-dark"></span>
+                        </div>
+                        <div class="card-body later_tasks">
+                            <!-- Later tasks will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            Tasks Completed <span class="badge bg-light text-dark"></span>
+                        </div>
+                        <div class="card-body completed_tasks">
+                            <!-- Completed tasks will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
     </main>
 
-    <footer class="container-fluid p-3">
-        <section class="row footer_section">
-            <section class="col-12 d-flex flex-row justify-content-center align-items-center">
-                <h1 style="font-size:36px;">Let's Connect!</h1>
-                <a href="https://github.com/Harrison-Holt" aria-label="Visit Harrison's GitHub profile" title="Visit Harrison's GitHub profile">
-                    <i class="fab fa-github" style="font-size:36px;"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/harrison-holt-18a703202" aria-label="Visit Harrison's LinkedIn profile" title="Visit Harrison's LinkedIn profile">
-                    <i class="fab fa-linkedin" style="font-size:36px;"></i>
-                </a>
-                <a href="mailto:hholt2901@gmail.com" aria-label="Send an email to Harrison" title="Send an email to Harrison">
-                    <i class="fa fa-envelope" style="font-size:36px;"></i>
-                </a> 
-            </section>
-        </section>   
+    <footer class="bg-dark text-white p-4 mt-5">
+        <div class="d-flex justify-content-center align-items-center gap-3">
+            <h2>Let's Connect!</h2>
+            <a href="https://github.com/Harrison-Holt" class="text-white" aria-label="Visit Harrison's GitHub profile" title="Visit Harrison's GitHub profile">
+                <i class="fab fa-github fa-2x"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/harrison-holt-18a703202" class="text-white" aria-label="Visit Harrison's LinkedIn profile" title="Visit Harrison's LinkedIn profile">
+                <i class="fab fa-linkedin fa-2x"></i>
+            </a>
+            <a href="mailto:hholt2901@gmail.com" class="text-white" aria-label="Send an email to Harrison" title="Send an email to Harrison">
+                <i class="fa fa-envelope fa-2x"></i>
+            </a> 
+        </div>
     </footer>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="List.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ON5lZ5Itg5s9iLhzLUW+GYB3mHFc/lbTm9fr4NUv0F3/whlz0f6bhBajzz3Q39aG" crossorigin="anonymous"></script>
