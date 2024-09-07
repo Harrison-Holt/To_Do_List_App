@@ -24,7 +24,7 @@ header a {
 }
 
 header a:hover {
-    color: white; 
+    color: #70BEBC;  
 }
 
 #quotes {
@@ -98,4 +98,9 @@ button {
 
 button {
     margin: 10px; 
+}
+
+i:hover {
+     transform: scale(1.1);
+     color: #70BEBC;
 }

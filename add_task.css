@@ -23,6 +23,12 @@ header a {
 }
 
 header a:hover {
-    color: white; 
+    color: #70BEBC;  
 }
+
+i:hover {
+    transform: scale(1.1);
+    color: #70BEBC;
+}
+
 
