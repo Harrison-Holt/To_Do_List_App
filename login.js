@@ -1,4 +1,4 @@
-document.getElementById("submit_register_button").addEventListener('click', async function(event) {
+document.getElementById("submit_login_button").addEventListener('click', async function(event) {
     event.preventDefault(); 
 
     let username = document.getElementById("username").value.trim(); 
@@ -11,11 +11,11 @@ document.getElementById("submit_register_button").addEventListener('click', asyn
 
     try {
         const response = await fetch('/api/login', {
-            method: 'GET', 
+            method: 'POST', 
             headers: {
                 'Content-Type': 'application/json'
             }, 
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, user_password: password })
         }); 
 
         if (response.ok) {
