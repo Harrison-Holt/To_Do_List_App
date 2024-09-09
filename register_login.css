@@ -26,3 +26,8 @@ header a:hover {
 p {
     font-family: 'Cardo';
 }
+
+i:hover {
+    transform: scale(1.1);
+    color: #70BEBC;
+}
