@@ -1,14 +1,15 @@
 let tasks_list = [];
 const { jsPDF } = window.jspdf || {};
 
+
 // Function to delete a task
 async function delete_task(task_id) {
     try {
-        const response = await fetch('/api/tasks', { // Adjust the endpoint if necessary
+        const response = await fetch('/api/tasks', { 
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': Bearer ${localStorage.getItem('token')} // Include JWT token for authentication
+                'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication
             },
             body: JSON.stringify({ id: task_id }) // Send the task ID
         });
@@ -30,6 +31,8 @@ async function delete_task(task_id) {
         alert("Error deleting task. Please try again later.");
     }
 }
+
+
 // Fetch tasks from the API when the page loads
 async function get_tasks() {
     try {
