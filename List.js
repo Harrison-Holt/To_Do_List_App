@@ -160,20 +160,25 @@ function create_task_card(task) {
         window.location.href = `add_task.html?task_id=${task.id}`;
     };
 
-    list_items.innerHTML = `Name: ${task.task_name}<br> Due Date: ${formatDate(task.task_due_date)}<br>
-    Due Time: ${formatTime(task.task_due_time)}<br> Priority: ${task.task_priority}`;
+    // Adjust the date to local time zone and format it
+    const dueDate = new Date(task.task_due_date);
+    dueDate.setMinutes(dueDate.getMinutes() + dueDate.getTimezoneOffset()); // Adjust for local timezone
+    const formattedDate = dueDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+
+    list_items.innerHTML = `Name: ${task.task_name}<br> Due Date: ${formattedDate}<br>
+    Due Time: ${task.task_due_time}<br> Priority: ${task.task_priority}`;
 
     task_card.appendChild(thumbtack);
     task_card.appendChild(list_items);
     task_card.appendChild(delete_task_button);
-    task_card.appendChild(edit_task_button);
+    task_card.appendChild(edit_task_button); 
 
     if (!task.task_completed) {
         const complete_task_button = document.createElement('button');
         complete_task_button.classList.add('completed_card');
         complete_task_button.textContent = 'Complete';
         complete_task_button.onclick = function() {
-            complete_task(task.id);
+            complete_task(task.id);  // Call the complete_task function
         };
         task_card.appendChild(complete_task_button);
     } else {
@@ -183,6 +188,7 @@ function create_task_card(task) {
 
     return task_card;
 }
+
 
 // Correctly filter and display tasks due today
 function get_tasks_due_today() {
