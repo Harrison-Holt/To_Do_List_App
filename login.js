@@ -19,6 +19,8 @@ document.getElementById("submit_login_button").addEventListener('click', async f
         }); 
 
         if (response.ok) {
+            const data = await response.json();
+            localStorage.setItem('token', data.token); 
             window.location.href = './index.html'; // Redirect on success
         } else {
             // Check if response is JSON

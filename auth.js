@@ -1,5 +1,3 @@
-
-// Function to check if the user is logged in by verifying the JWT token
 export function checkLoginStatus() {
     const token = localStorage.getItem('token');
     const content = document.getElementById('protected-content');
@@ -44,5 +42,6 @@ export function checkLoginStatus() {
     });
 }
 
-// Initialize login check on page load
+// Automatically check login status on page load
 window.onload = checkLoginStatus;
+

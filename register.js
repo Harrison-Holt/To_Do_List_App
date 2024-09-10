@@ -20,6 +20,8 @@ document.getElementById("submit_register_button").addEventListener('click', asyn
         }); 
 
         if (response.ok) {
+            const data = await response.json();
+            localStorage.setItem('token', data.token); 
             window.location.href = './index.html'; // Redirect on success
         } else {
             // Check if response is JSON
