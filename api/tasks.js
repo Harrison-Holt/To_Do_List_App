@@ -1,8 +1,7 @@
 import pool from '../db.js'; // Adjust the path as needed
-import { handler } from './verify.js'; // Adjust the path as needed
+import { verify_token } from './verify.js'; // Adjust the path as needed
 
 export default async function handler(req, res) {
-    // Check the HTTP method and call the appropriate function
     switch (req.method) {
         case 'POST':
             await createTask(req, res);
@@ -24,7 +23,7 @@ export default async function handler(req, res) {
 
 // Create a Task
 async function createTask(req, res) {
-    handler(req, res, async () => {
+    verify_token(req, res, async () => {
         const { task_name, task_due_date, task_due_time, task_priority } = req.body;
 
         if (!task_name) {
@@ -32,7 +31,7 @@ async function createTask(req, res) {
         }
 
         try {
-            const userId = req.user.userId; // Assuming verify_token middleware sets req.user
+            const userId = req.user.userId;
 
             const result = await pool.query(
                 'INSERT INTO tasks (user_id, task_name, task_due_date, task_due_time, task_priority) VALUES ($1, $2, $3, $4, $5) RETURNING *',
@@ -49,7 +48,7 @@ async function createTask(req, res) {
 
 // Get All Tasks
 async function getTasks(req, res) {
-    handler(req, res, async () => {
+    verify_token(req, res, async () => {
         try {
             const userId = req.user.userId;
 
@@ -68,7 +67,7 @@ async function getTasks(req, res) {
 
 // Update a Task
 async function updateTask(req, res) {
-    handler(req, res, async () => {
+    verify_token(req, res, async () => {
         const { id, task_name, task_due_date, task_due_time, task_priority } = req.body;
 
         if (!id || !task_name) {
@@ -97,7 +96,7 @@ async function updateTask(req, res) {
 
 // Delete a Task
 async function deleteTask(req, res) {
-    handler(req, res, async () => {
+    verify_token(req, res, async () => {
         const { id } = req.body;
 
         if (!id) {

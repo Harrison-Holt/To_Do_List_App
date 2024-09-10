@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export default function handler(req, res) {
+export function verify_token(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]; // Ensure token extraction is correct
 
@@ -16,6 +16,9 @@ export default function handler(req, res) {
         if (err) {
             return res.status(403).json({ message: 'Invalid or Expired Token' });
         }
-        res.status(200).json({ message: 'Token is valid', user });
+
+        // Attach user information to the request for use in other routes
+        req.user = user;
+        next(); // Proceed to the next middleware or route handler
     });
 }
