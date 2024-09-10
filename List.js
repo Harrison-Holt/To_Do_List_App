@@ -63,19 +63,21 @@ function export_tasks(tasks) {
     doc.save('tasks.pdf');
 }
 
-// Function to complete a task
 async function complete_task(task_id) {
     try {
         const response = await fetch('/api/tasks', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication
             },
-            body: JSON.stringify({ id: task_id, task_completed: true })
+            body: JSON.stringify({ id: task_id, task_completed: true }) // Set completed to true
         });
 
         if (response.ok) {
+            const data = await response.json();
+            console.log('Task completed successfully:', data);
+            
             // Update the tasks list and refresh the UI
             tasks_list = tasks_list.map(task => {
                 if (task.id === task_id) {
@@ -85,7 +87,8 @@ async function complete_task(task_id) {
             });
             renderTasks(); // Re-render tasks after marking one as complete
         } else {
-            console.error("Failed to complete task:", response.statusText);
+            const errorText = await response.text();
+            console.error("Failed to complete task:", errorText);
             alert("Failed to complete task. Please try again later.");
         }
     } catch (error) {
@@ -93,6 +96,7 @@ async function complete_task(task_id) {
         alert("Error completing task. Please try again later.");
     }
 }
+
 
 // Function to render tasks
 function renderTasks() {

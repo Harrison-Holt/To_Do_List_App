@@ -67,32 +67,31 @@ async function getTasks(req, res) {
 
 // Update a Task
 async function updateTask(req, res) {
-    verify_token(req, res, async () => {
-        const { id, task_name, task_due_date, task_due_time, task_priority } = req.body;
+    const { id, task_name, task_due_date, task_due_time, task_priority, task_completed } = req.body;
 
-        if (!id || !task_name) {
-            return res.status(400).json({ message: 'Task ID and task name are required!' });
+    if (!id) {
+        return res.status(400).json({ message: 'Task ID is required!' });
+    }
+
+    try {
+        const userId = req.user.userId;
+
+        const result = await pool.query(
+            'UPDATE tasks SET task_name = $1, task_due_date = $2, task_due_time = $3, task_priority = $4, task_completed = $5, updated_at = CURRENT_TIMESTAMP WHERE id = $6 AND user_id = $7 RETURNING *',
+            [task_name, task_due_date, task_due_time, task_priority, task_completed, id, userId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Task not found or you do not have permission to update it' });
         }
 
-        try {
-            const userId = req.user.userId;
-
-            const result = await pool.query(
-                'UPDATE tasks SET task_name = $1, task_due_date = $2, task_due_time = $3, task_priority = $4, updated_at = CURRENT_TIMESTAMP WHERE id = $5 AND user_id = $6 RETURNING *',
-                [task_name, task_due_date, task_due_time, task_priority, id, userId]
-            );
-
-            if (result.rows.length === 0) {
-                return res.status(404).json({ message: 'Task not found or you do not have permission to update it' });
-            }
-
-            res.status(200).json({ message: 'Task updated successfully', task: result.rows[0] });
-        } catch (error) {
-            console.error('Error updating task:', error);
-            res.status(500).json({ message: 'Internal Server Error', error: error.message });
-        }
-    });
+        res.status(200).json({ message: 'Task updated successfully', task: result.rows[0] });
+    } catch (error) {
+        console.error('Error updating task:', error);
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    }
 }
+
 
 // Delete a Task
 async function deleteTask(req, res) {
