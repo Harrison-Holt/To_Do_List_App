@@ -1,5 +1,6 @@
 import pool from '../db.js'; 
 import bcrypt from 'bcryptjs'; 
+import jwt from 'jsonwebtoken'; 
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
