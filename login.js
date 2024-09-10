@@ -11,30 +11,20 @@ document.getElementById("submit_login_button").addEventListener('click', async f
 
     try {
         const response = await fetch('/api/login', {
-            method: 'POST', 
+            method: 'POST',  // Ensure this is the correct method for your API
             headers: {
                 'Content-Type': 'application/json'
             }, 
-            body: JSON.stringify({ username, user_password: password })
+            body: JSON.stringify({ username, password })
         }); 
 
         if (response.ok) {
             const data = await response.json();
-            localStorage.setItem('token', data.token); 
-            window.location.href = './index.html'; // Redirect on success
+            localStorage.setItem('token', data.token); // Store the JWT token
+            window.location.href = './index.html'; // Redirect to the protected page
         } else {
-            // Check if response is JSON
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                const error = await response.json();
-                alert(`Error: ${error.message}`); // Display error message
-                console.error("Error: ", error); 
-            } else {
-                // Handle non-JSON response (like HTML error pages)
-                const text = await response.text();
-                console.error("Unexpected response:", text);
-                alert("An unexpected error occurred. Please try again later.");
-            }
+            const error = await response.json();
+            alert(`Error: ${error.message}`); // Display error message from server
         }
     } catch (error) {
         console.error("Error sending user data: ", error); 
