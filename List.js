@@ -1,6 +1,36 @@
 let tasks_list = [];
 const { jsPDF } = window.jspdf || {};
 
+// Function to delete a task
+async function delete_task(task_id) {
+    try {
+        const response = await fetch('/api/tasks', { // Adjust the endpoint if necessary
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication
+            },
+            body: JSON.stringify({ id: task_id }) // Send the task ID
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Task deleted successfully:', data);
+
+            // Update the tasks list and refresh the UI
+            tasks_list = tasks_list.filter(task => task.id !== task_id);
+            renderTasks(); // Re-render tasks after deletion
+        } else {
+            const errorText = await response.text();
+            console.error("Failed to delete task:", errorText);
+            alert("Failed to delete task. Please try again later.");
+        }
+    } catch (error) {
+        console.error("Error deleting task:", error);
+        alert("Error deleting task. Please try again later.");
+    }
+}
+
 // Fetch tasks from the API when the page loads
 async function get_tasks() {
     try {
@@ -65,13 +95,13 @@ function export_tasks(tasks) {
 
 async function complete_task(task_id) {
     try {
-        const response = await fetch('/api/tasks', {
+        const response = await fetch('/api/tasks/complete', { // Ensure the correct API route
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication
             },
-            body: JSON.stringify({ id: task_id, task_completed: true }) // Set completed to true
+            body: JSON.stringify({ id: task_id }) // Send only the task ID
         });
 
         if (response.ok) {
@@ -96,6 +126,7 @@ async function complete_task(task_id) {
         alert("Error completing task. Please try again later.");
     }
 }
+
 
 
 // Function to render tasks
