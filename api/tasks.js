@@ -16,7 +16,7 @@ export default async function handler(req, res) {
             verify_token(req, res, async () => await deleteTask(req, res));
             break;
         case 'PATCH':
-            verify_token(req, res, async () => await completeTask(req, res)); // PATCH for completing tasks
+            verify_token(req, res, async () => await completeTask(req, res)); 
             break;
         default:
             res.setHeader('Allow', ['POST', 'GET', 'PUT', 'DELETE', 'PATCH']);

@@ -1,15 +1,47 @@
+// Function to check for strong password
+function check_for_strong_password() {
+    const password_input = document.getElementById("password");
+    const password = password_input.value;
+    
+    // Define the criteria for a strong password
+    const password_criteria = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    // Check if the password meets the criteria
+    if (!password_criteria.test(password)) {
+        password_input.setCustomValidity('Password must be at least 8 characters long and contain an uppercase letter, a number, and a special character.'); 
+    } else {
+        password_input.setCustomValidity(''); 
+    }
+}
+
+// Add an input event listener to validate the password in real-time
+document.getElementById('password').addEventListener('input', check_for_strong_password); 
+
+// Register form submission event listener
 document.getElementById("submit_register_button").addEventListener('click', async function(event) {
     event.preventDefault(); 
 
     let username = document.getElementById("username").value.trim(); 
     let email = document.getElementById("email").value.trim(); 
-    let password = document.getElementById("password").value.trim(); 
+    let password_input = document.getElementById("password");
+    let password = password_input.value.trim(); 
 
+    // Check if all fields are filled
     if (!username || !email || !password) {
         alert("All fields are required!"); 
         return; 
     }
 
+    // Check the password validity before submission
+    check_for_strong_password();
+
+    // If password does not meet criteria, prevent form submission
+    if (!password_input.checkValidity()) {
+        alert(password_input.validationMessage); // Show the custom error message
+        return; 
+    }
+
+    // Try to register the user
     try {
         const response = await fetch('/api/register', {
             method: 'POST', 
@@ -42,3 +74,4 @@ document.getElementById("submit_register_button").addEventListener('click', asyn
         alert("An error occurred. Please try again later."); 
     }
 });
+
