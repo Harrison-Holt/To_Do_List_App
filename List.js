@@ -1,34 +1,6 @@
 let tasks_list = [];
 const { jsPDF } = window.jspdf || {};
 
-// Function to delete a task
-async function delete_task(task_id) {
-    try {
-        const response = await fetch('/api/tasks', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify({ id: task_id })
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            console.log('Task deleted successfully:', data);
-            tasks_list = tasks_list.filter(task => task.id !== task_id);
-            renderTasks();
-        } else {
-            const errorText = await response.text();
-            console.error("Failed to delete task:", errorText);
-            alert("Failed to delete task. Please try again later.");
-        }
-    } catch (error) {
-        console.error("Error deleting task:", error);
-        alert("Error deleting task. Please try again later.");
-    }
-}
-
 // Fetch tasks from the API when the page loads
 async function get_tasks() {
     try {
@@ -180,12 +152,15 @@ function create_task_card(task) {
     return task_card;
 }
 
-// Display functions for tasks in different categories
+// Correctly filter and display tasks due today
 function get_tasks_due_today() {
     const tasks_due_today_container = document.querySelector('.tasks_today');
-    const current_day = get_formatted_date();
+    const current_day = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
 
-    const tasks_due_today = tasks_list.filter(task => task.task_due_date === current_day && !task.task_completed);
+    const tasks_due_today = tasks_list.filter(task => {
+        const task_due_date = new Date(task.task_due_date).toISOString().split('T')[0];
+        return task_due_date === current_day && !task.task_completed;
+    });
 
     tasks_due_today_container.innerHTML = '';
     tasks_due_today.forEach(task => {
@@ -194,11 +169,15 @@ function get_tasks_due_today() {
     });
 }
 
+// Correctly filter and display tasks due later
 function get_tasks_due_later() {
     const tasks_due_later_container = document.querySelector('.later_tasks');
-    const current_day = get_formatted_date();
+    const current_day = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
 
-    const tasks_due_later = tasks_list.filter(task => task.task_due_date > current_day && !task.task_completed);
+    const tasks_due_later = tasks_list.filter(task => {
+        const task_due_date = new Date(task.task_due_date).toISOString().split('T')[0];
+        return task_due_date > current_day && !task.task_completed;
+    });
 
     tasks_due_later_container.innerHTML = '';
     tasks_due_later.forEach(task => {
@@ -221,9 +200,12 @@ function get_completed_tasks() {
 
 function get_past_due_items() {
     const past_due_items_container = document.querySelector('.past_due_items_container');
-    const current_day = get_formatted_date();
+    const current_day = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
 
-    const tasks_past_due = tasks_list.filter(task => task.task_due_date < current_day && !task.task_completed);
+    const tasks_past_due = tasks_list.filter(task => {
+        const task_due_date = new Date(task.task_due_date).toISOString().split('T')[0];
+        return task_due_date < current_day && !task.task_completed;
+    });
 
     past_due_items_container.innerHTML = '';
     tasks_past_due.forEach(task => {
@@ -236,23 +218,15 @@ function get_past_due_items() {
 function formatDate(dateString) {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US'); // Converts to MM/DD/YYYY format
+    return date.toLocaleDateString('en-US');
 }
 
 function formatTime(timeString) {
     if (!timeString) return '';
     const [hour, minute] = timeString.split(':');
     const ampm = hour >= 12 ? 'PM' : 'AM';
-    const formattedHour = hour % 12 || 12; // Convert hour 0 to 12
+    const formattedHour = hour % 12 || 12;
     return `${formattedHour}:${minute} ${ampm}`;
-}
-
-function get_formatted_date() {
-    const current_day = new Date();
-    current_day.setHours(0, 0, 0, 0);
-
-    return ('0' + (current_day.getMonth() + 1)).slice(-2)
-        + '-' + ('0' + current_day.getDate()).slice(-2) + '-' + current_day.getFullYear();
 }
 
 // Fetch and display the quote of the day
