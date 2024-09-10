@@ -1,5 +1,6 @@
 import pool from '../db.js'; 
 import bcrypt from 'bcryptjs'; 
+import jwt from 'jsonwebtoken'; 
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -22,7 +23,15 @@ export default async function handler(req, res) {
             [username, hashed_password, email]
         ); 
 
-        res.status(201).json({ message: 'Account created successfully', account: result.rows[0] });
+        const user = result.rows[0]; 
+
+        const token = jwt.sign(
+            { userId: user.id, username: user.username }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1h' }
+        ); 
+
+        res.status(201).json({ message: 'Account created successfully', token, account: { username: user.username } });
     } catch (error) {
         console.error('Error occurred during request processing: ', error);
 

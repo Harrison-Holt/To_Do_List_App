@@ -33,7 +33,14 @@ export default async function handler(req, res) {
             return res.status(401).json({ message: "Invalid password! Try Again"}); 
         }
 
-        res.status(200).json({ message: 'Account Login successfully',  account: { username: user.username } });
+
+        const token = jwt.sign(
+            { userId: user.id, username: user.username }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1h' }
+        ); 
+
+        res.status(201).json({ message: 'Account created successfully', token, account: { username: user.username } });
     } catch (error) {
         console.error('Error occurred during request processing: ', error);
         res.status(500).json({ message: 'Account Login Failed', error: error.message });
