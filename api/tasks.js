@@ -1,5 +1,5 @@
 import pool from '../db.js'; // Adjust the path as needed
-import { verify_token } from './verify.js'; // Adjust the path as needed
+import { handler } from './verify.js'; // Adjust the path as needed
 
 export default async function handler(req, res) {
     // Check the HTTP method and call the appropriate function
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 
 // Create a Task
 async function createTask(req, res) {
-    verify_token(req, res, async () => {
+    handler(req, res, async () => {
         const { task_name, task_due_date, task_due_time, task_priority } = req.body;
 
         if (!task_name) {
@@ -49,7 +49,7 @@ async function createTask(req, res) {
 
 // Get All Tasks
 async function getTasks(req, res) {
-    verify_token(req, res, async () => {
+    handler(req, res, async () => {
         try {
             const userId = req.user.userId;
 
@@ -68,7 +68,7 @@ async function getTasks(req, res) {
 
 // Update a Task
 async function updateTask(req, res) {
-    verify_token(req, res, async () => {
+    handler(req, res, async () => {
         const { id, task_name, task_due_date, task_due_time, task_priority } = req.body;
 
         if (!id || !task_name) {
@@ -97,7 +97,7 @@ async function updateTask(req, res) {
 
 // Delete a Task
 async function deleteTask(req, res) {
-    verify_token(req, res, async () => {
+    handler(req, res, async () => {
         const { id } = req.body;
 
         if (!id) {
