@@ -178,17 +178,42 @@ function get_tasks_due_later() {
     });
 }
 
-function get_completed_tasks() {
-    const completed_tasks_container = document.querySelector('.completed_tasks');
+// Function to complete a task
+async function complete_task(task_id) {
+    try {
+        const response = await fetch('/api/tasks', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication
+            },
+            body: JSON.stringify({ id: task_id, task_completed: true }) // Adjust the payload to match the API's expected format
+        });
 
-    completed_tasks_container.innerHTML = '';
-    tasks_list.forEach(task => {
-        if (task.task_completed) {
-            const task_card = create_task_card(task);
-            completed_tasks_container.appendChild(task_card);
+        if (response.ok) {
+            const data = await response.json(); // Check if response is JSON
+            console.log('Task completed successfully:', data);
+            
+            // Update the tasks list and refresh the UI
+            tasks_list = tasks_list.map(task => {
+                if (task.id === task_id) {
+                    task.task_completed = true;
+                }
+                return task;
+            });
+            renderTasks(); // Re-render tasks after marking one as complete
+        } else {
+            // Log detailed error message
+            const errorText = await response.text();
+            console.error("Failed to complete task:", errorText);
+            alert("Failed to complete task. Please try again later.");
         }
-    });
+    } catch (error) {
+        console.error("Error completing task:", error);
+        alert("Error completing task. Please try again later.");
+    }
 }
+
 
 function get_past_due_items() {
     const past_due_items_container = document.querySelector('.past_due_items_container');
