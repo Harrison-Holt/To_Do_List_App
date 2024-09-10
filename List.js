@@ -4,22 +4,20 @@ const { jsPDF } = window.jspdf || {};
 // Function to delete a task
 async function delete_task(task_id) {
     try {
-        const response = await fetch('/api/tasks', { // Adjust the endpoint if necessary
+        const response = await fetch('/api/tasks', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
-            body: JSON.stringify({ id: task_id }) // Send the task ID
+            body: JSON.stringify({ id: task_id })
         });
 
         if (response.ok) {
             const data = await response.json();
             console.log('Task deleted successfully:', data);
-
-            // Update the tasks list and refresh the UI
             tasks_list = tasks_list.filter(task => task.id !== task_id);
-            renderTasks(); // Re-render tasks after deletion
+            renderTasks();
         } else {
             const errorText = await response.text();
             console.error("Failed to delete task:", errorText);
@@ -38,7 +36,7 @@ async function get_tasks() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         });
 
@@ -57,7 +55,7 @@ async function get_tasks() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    get_tasks(); 
+    get_tasks();
 
     const add_task_button = document.getElementById("add_task_button");
     const export_task_button = document.getElementById("export_task_button");
@@ -70,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         export_tasks(tasks_list);
     });
 
-    get_quote_of_the_day(); // Call to fetch and display the quote of the day
+    get_quote_of_the_day();
 });
 
 // Function to export tasks to PDF
@@ -80,9 +78,9 @@ function export_tasks(tasks) {
     tasks.forEach(task => {
         doc.text(10, y, `Task: ${task.task_name}`);
         y += 10;
-        doc.text(10, y, `Due: ${task.task_due_date}`);
+        doc.text(10, y, `Due Date: ${formatDate(task.task_due_date)}`);
         y += 10;
-        doc.text(10, y, `Time: ${task.task_due_time}`);
+        doc.text(10, y, `Due Time: ${formatTime(task.task_due_time)}`);
         y += 10;
         doc.text(10, y, `Priority: ${task.task_priority}`);
         y += 10;
@@ -95,27 +93,25 @@ function export_tasks(tasks) {
 
 async function complete_task(task_id) {
     try {
-        const response = await fetch('/api/tasks/', { // Ensure the correct API route
+        const response = await fetch('/api/tasks/', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
-            body: JSON.stringify({ id: task_id }) // Send only the task ID
+            body: JSON.stringify({ id: task_id })
         });
 
         if (response.ok) {
             const data = await response.json();
             console.log('Task completed successfully:', data);
-            
-            // Update the tasks list and refresh the UI
             tasks_list = tasks_list.map(task => {
                 if (task.id === task_id) {
                     task.task_completed = true;
                 }
                 return task;
             });
-            renderTasks(); // Re-render tasks after marking one as complete
+            renderTasks();
         } else {
             const errorText = await response.text();
             console.error("Failed to complete task:", errorText);
@@ -126,8 +122,6 @@ async function complete_task(task_id) {
         alert("Error completing task. Please try again later.");
     }
 }
-
-
 
 // Function to render tasks
 function renderTasks() {
@@ -162,20 +156,20 @@ function create_task_card(task) {
         window.location.href = `add_task.html?task_id=${task.id}`;
     };
 
-    list_items.innerHTML = `Name: ${task.task_name}<br> Due Date: ${task.task_due_date}<br>
-    Due Time: ${task.task_due_time}<br> Priority: ${task.task_priority}`;
+    list_items.innerHTML = `Name: ${task.task_name}<br> Due Date: ${formatDate(task.task_due_date)}<br>
+    Due Time: ${formatTime(task.task_due_time)}<br> Priority: ${task.task_priority}`;
 
     task_card.appendChild(thumbtack);
     task_card.appendChild(list_items);
     task_card.appendChild(delete_task_button);
-    task_card.appendChild(edit_task_button); 
+    task_card.appendChild(edit_task_button);
 
     if (!task.task_completed) {
         const complete_task_button = document.createElement('button');
         complete_task_button.classList.add('completed_card');
         complete_task_button.textContent = 'Complete';
         complete_task_button.onclick = function() {
-            complete_task(task.id);  // Call the complete_task function
+            complete_task(task.id);
         };
         task_card.appendChild(complete_task_button);
     } else {
@@ -238,7 +232,21 @@ function get_past_due_items() {
     });
 }
 
-// Utility function to get the current date formatted as MM-DD-YYYY
+// Utility functions
+function formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US'); // Converts to MM/DD/YYYY format
+}
+
+function formatTime(timeString) {
+    if (!timeString) return '';
+    const [hour, minute] = timeString.split(':');
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const formattedHour = hour % 12 || 12; // Convert hour 0 to 12
+    return `${formattedHour}:${minute} ${ampm}`;
+}
+
 function get_formatted_date() {
     const current_day = new Date();
     current_day.setHours(0, 0, 0, 0);
@@ -255,16 +263,14 @@ function get_quote_of_the_day() {
     let storedQuoteData = localStorage.getItem('dailyQuote');
     if (storedQuoteData) {
         storedQuoteData = JSON.parse(storedQuoteData);
-        // Check if the stored quote is from today
         if (storedQuoteData.date === currentDate) {
             displayQuote(storedQuoteData.quote, storedQuoteData.author);
             return;
         }
     }
 
-    // If there is no quote stored for today, fetch a new one
     const apiLink = `https://api.api-ninjas.com/v1/quotes?category=success`;
-    const apiKey = 'Yvk4eNG2JLCJ5yGmJounqA==UOBJGJvJs8xcwlLt'; 
+    const apiKey = 'Yvk4eNG2JLCJ5yGmJounqA==UOBJGJvJs8xcwlLt';
 
     fetch(apiLink, {
         headers: {
@@ -281,7 +287,6 @@ function get_quote_of_the_day() {
         if (data && data.length > 0) {
             const firstQuote = data[0];
             displayQuote(firstQuote.quote, firstQuote.author);
-            // Store the new quote in localStorage with today's date
             localStorage.setItem('dailyQuote', JSON.stringify({
                 quote: firstQuote.quote,
                 author: firstQuote.author,
@@ -299,6 +304,7 @@ function displayQuote(quote, author) {
     quoteElement.innerHTML = `"${quote}"<br> -${author}`;
     document.getElementById("quotes").appendChild(quoteElement);
 }
+
 
 
 
