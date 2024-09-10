@@ -41,9 +41,7 @@ export function checkLoginStatus() {
     })
     .catch(error => {
         console.error('Error verifying token:', error);
-        alert('Verification failed. Please log in again.');
         localStorage.removeItem('token');
-        window.location.href = '/login.html';
     });
 }
 
