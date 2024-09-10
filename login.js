@@ -11,16 +11,16 @@ document.getElementById("submit_login_button").addEventListener('click', async f
 
     try {
         const response = await fetch('/api/login', {
-            method: 'POST',  // Ensure the method is POST
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }, 
-            body: JSON.stringify({ username, password })  // Ensure body is correctly formatted
+            body: JSON.stringify({ username, password })
         }); 
 
         if (response.ok) {
             const data = await response.json();
-            localStorage.setItem('token', data.token); // Store the JWT token
+            localStorage.setItem('token', data.token); // Store the JWT token correctly
             window.location.href = './index.html'; // Redirect to the protected page
         } else {
             const error = await response.json();

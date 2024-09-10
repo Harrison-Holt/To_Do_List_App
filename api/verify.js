@@ -5,12 +5,13 @@ dotenv.config();
 
 export default function handler(req, res) {
     const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = authHeader && authHeader.split(' ')[1]; // Ensure token extraction is correct
 
     if (!token) {
         return res.status(401).json({ message: 'Access token required!' });
     }
 
+    // Verify the token using the secret key
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
             return res.status(403).json({ message: 'Invalid or Expired Token' });

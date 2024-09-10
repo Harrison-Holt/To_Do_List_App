@@ -1,15 +1,13 @@
-// auth.js
-
 export function checkLoginStatus() {
     const token = localStorage.getItem('token');
 
-    // If no token is found, redirect to the login page
+    // Check if the token exists
     if (!token) {
-        window.location.href = '/login.html';
+        window.location.href = '/login.html'; // Redirect to login if no token
         return;
     }
 
-    // Check if the token is expired by decoding its payload
+    // Decode the JWT token to check for expiration
     try {
         const payload = JSON.parse(atob(token.split('.')[1]));
         const isTokenExpired = payload.exp * 1000 < Date.now();
@@ -26,11 +24,11 @@ export function checkLoginStatus() {
         return;
     }
 
-    // Verify the token by making a request to a protected endpoint
+    // Attempt to verify the token by calling a protected API endpoint
     fetch('/api/verify', {
         method: 'GET',
         headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`, // Ensure the token is correctly formatted
             'Content-Type': 'application/json'
         }
     })
