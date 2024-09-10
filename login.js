@@ -11,11 +11,11 @@ document.getElementById("submit_login_button").addEventListener('click', async f
 
     try {
         const response = await fetch('/api/login', {
-            method: 'POST',  // Ensure this is the correct method for your API
+            method: 'POST',  // Ensure the method is POST
             headers: {
                 'Content-Type': 'application/json'
             }, 
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password })  // Ensure body is correctly formatted
         }); 
 
         if (response.ok) {
