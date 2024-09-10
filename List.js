@@ -95,8 +95,8 @@ function export_tasks(tasks) {
 
 async function complete_task(task_id) {
     try {
-        const response = await fetch('/api/tasks/complete', { // Ensure the correct API route
-            method: 'PUT',
+        const response = await fetch('/api/tasks/', { // Ensure the correct API route
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication

@@ -15,9 +15,13 @@ export default async function handler(req, res) {
         case 'DELETE':
             await deleteTask(req, res);
             break;
+        case 'PATCH': 
+            await completeTask(req, res);
+            break;
         default:
-            res.setHeader('Allow', ['POST', 'GET', 'PUT', 'DELETE']);
+            res.setHeader('Allow', ['POST', 'GET', 'PUT', 'DELETE', 'PATCH']);
             res.status(405).end(`Method ${req.method} Not Allowed`);
+
     }
 }
 
