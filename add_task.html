@@ -48,8 +48,8 @@
                 </form>
             </section>
         </main>        
-        <footer class="bg-dark text-white p-4 mt-5">
-            <div class="d-flex justify-content-center align-items-center gap-3">
+        <footer class="bg-dark text-white p-4 mt-5 row">
+            <div class="col-8 d-flex justify-content-end align-items-center gap-3">
                 <h2>Let's Connect!</h2>
                 <a href="https://github.com/Harrison-Holt" class="text-white" aria-label="Visit Harrison's GitHub profile" title="Visit Harrison's GitHub profile">
                     <i class="fab fa-github fa-2x"></i>
@@ -61,8 +61,12 @@
                     <i class="fa fa-envelope fa-2x"></i>
                 </a> 
             </div>
-        </footer> 
+            <div class="col-4 d-flex justify-content-end align-items-center">
+                <button id="logout_button">Logout</button>
+            </div>
+        </footer>
 
+        <script src="logout.js"></script>
         <script type="module" src="auth.js"></script>
         <script src="add_task.js"></script>
     </body>
