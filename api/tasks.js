@@ -1,29 +1,29 @@
-import pool from '../db.js'; // Adjust the path as needed
-import { verify_token } from './verify.js'; // Adjust the path as needed
+import pool from '../db.js';
+import { verify_token } from './verify.js';
 
 export default async function handler(req, res) {
     switch (req.method) {
         case 'POST':
-            await createTask(req, res);
+            verify_token(req, res, async () => await createTask(req, res));
             break;
         case 'GET':
-            await getTasks(req, res);
+            verify_token(req, res, async () => await getTasks(req, res));
             break;
         case 'PUT':
-            await updateTask(req, res);
+            verify_token(req, res, async () => await updateTask(req, res));
             break;
         case 'DELETE':
-            await deleteTask(req, res);
+            verify_token(req, res, async () => await deleteTask(req, res));
             break;
-        case 'PATCH': 
-            await completeTask(req, res);
+        case 'PATCH':
+            verify_token(req, res, async () => await completeTask(req, res)); // PATCH for completing tasks
             break;
         default:
             res.setHeader('Allow', ['POST', 'GET', 'PUT', 'DELETE', 'PATCH']);
             res.status(405).end(`Method ${req.method} Not Allowed`);
-
     }
 }
+
 
 // Create a Task
 async function createTask(req, res) {
