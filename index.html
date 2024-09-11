@@ -20,13 +20,19 @@
     
     
       <section class="add_task_container row mt-5 d-flex justify-content-center align-items-center">
+        <div id="col-12 col-md-4">
         <button id="add_task_button" class="btn btn-primary btn-lg col-2 m-2 shadow p-2">
             <i class="fas fa-plus-circle"></i> Add Task
         </button>
+        </div>
+        <div id="col-12 col-md-4">
         <span id="quotes" class="col-7 text-center m-2">Quote of the Day:</span>
+        </div>
+        <div id="col-12 col-md-4">
         <button id="export_task_button" class="btn btn-secondary btn-lg col-2 m-2 p-2 shadow">
             <i class="fas fa-file-export"></i> Export Tasks
         </button>
+        </div>
     </section>
       
         <main class="container-fluid min-vh-100">
@@ -77,7 +83,7 @@
     </main>
 
     <footer class="bg-dark text-white p-4 mt-5 row">
-        <div class="col-12 col-md-10 d-flex justify-content-center justify-content-md-start align-items-center mb-3">
+        <div class="col-12 col-md-10 d-flex justify-content-around justify-content-md-start align-items-center mb-3">
             <button id="logout_button" class="btn btn-outline-light">Logout</button>
             <a href="./settings.html" class="btn btn-outline-light">Settings</a>
         </div>
