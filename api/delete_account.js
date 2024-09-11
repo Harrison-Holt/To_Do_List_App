@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     const userId = decoded.userId;
 
     // Delete the user from the database
-    const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [userId]);
+    const result = await pool.query('DELETE FROM accounts WHERE id = $1 RETURNING *', [userId]);
 
     // Check if the user was deleted
     if (result.rowCount === 0) {
