@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: 'Only POST requests are allowed' }); 
     }
 
-    const { username, password } = req.body;  // Ensure req.body is being used correctly
+    const { username, password } = req.body;  
 
     // Check for missing username or password
     if (!username || !password) {
