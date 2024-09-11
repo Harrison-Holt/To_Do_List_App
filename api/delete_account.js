@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   try {
     // Verify the token and extract the user ID
     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Ensure you set JWT_SECRET in your environment
-    const userId = decoded.userId; // Adjust based on your JWT payload structure
+    const userId = decoded.userId;
 
     // Delete the user from the database
     const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [userId]);
