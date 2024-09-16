@@ -139,15 +139,16 @@ function renderTasks() {
 function create_task_card(task) {
     const task_card = document.createElement('div');
     task_card.classList.add('task_card');
+
     const thumbtack = document.createElement('div');
     thumbtack.classList.add('thumbtack');
 
     const list_items = document.createElement('p');
     list_items.classList.add('card_info');
+
     const delete_task_button = document.createElement('button');
     delete_task_button.classList.add('delete_button');
     delete_task_button.textContent = 'Delete';
-
     delete_task_button.onclick = function() {
         delete_task(task.id);
     };
@@ -155,7 +156,6 @@ function create_task_card(task) {
     const edit_task_button = document.createElement('button');
     edit_task_button.classList.add('edit_button');
     edit_task_button.textContent = 'Edit';
-
     edit_task_button.onclick = function() {
         window.location.href = `add_task.html?task_id=${task.id}`;
     };
@@ -184,7 +184,7 @@ function create_task_card(task) {
     } else {
         list_items.innerHTML += `<br><br><span> Task Completed! </span>`;
         task_card.style.backgroundColor = 'grey';
-        task.card.style.color = 'white'; 
+        task_card.style.color = 'white'; 
     }
 
     return task_card;
