@@ -13,7 +13,10 @@ header h1 {
     font-size: 36px;
     padding: 0;
 }
- a {
+header, footer {
+    background-color: #3b4f63;
+}
+a {
     font-family: 'Merriweather'; 
     text-decoration: none;
     font-size: 24px;

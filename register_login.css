@@ -21,7 +21,9 @@ header a {
 header a:hover {
     color: #70BEBC;  
 }
-
+header, footer {
+    background-color: #3b4f63;
+}
 
 p {
     font-family: 'Cardo';

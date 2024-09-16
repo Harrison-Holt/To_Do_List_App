@@ -6,8 +6,8 @@ body {
     overflow-x: hidden;
 }
 /* Header Styles */
-header {
-    position: sticky;
+header, footer {
+    background-color: #3b4f63;
 }
 
 header h1 {
