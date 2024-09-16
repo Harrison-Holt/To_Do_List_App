@@ -9,7 +9,7 @@ async function delete_task(task_id) {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}` // Include JWT token for authentication
+                'Authorization': `Bearer ${localStorage.getItem('token')}` 
             },
             body: JSON.stringify({ id: task_id }) // Send the task ID
         });
@@ -184,6 +184,7 @@ function create_task_card(task) {
     } else {
         list_items.innerHTML += `<br><br><span> Task Completed! </span>`;
         task_card.style.backgroundColor = 'grey';
+        task.card.style.color = 'white'; 
     }
 
     return task_card;
