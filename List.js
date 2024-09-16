@@ -184,7 +184,7 @@ function create_task_card(task) {
     } else {
         list_items.innerHTML += `<br><br><span> Task Completed! </span>`;
         task_card.style.backgroundColor = 'grey';
-        task_card.style.color = 'white'; 
+        list_items.style.color = 'white'; 
     }
 
     return task_card;
