@@ -178,7 +178,7 @@ function create_task_card(task) {
         complete_task_button.classList.add('completed_card');
         complete_task_button.textContent = 'Complete';
         complete_task_button.onclick = function() {
-            complete_task(task.id);  // Call the complete_task function
+            complete_task(task.id);  
         };
         task_card.appendChild(complete_task_button);
     } else {
