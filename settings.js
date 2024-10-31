@@ -8,5 +8,8 @@ const payload = JSON.parse(atob(token.split('.')[1]));
 console.log(payload); 
 console.log(payload.username); 
 
-display_username.innerHTML = `${payload.username}`; 
+const username = payload.username; 
+const email = payload.email; 
+
+display_username.innerHTML = `${username}`; 
 
