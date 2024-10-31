@@ -25,7 +25,7 @@ async function update_username(new_username, user_id) {
             body: JSON.stringify({ new_username, user_id })  
      }); 
         const data = await response.json(); 
-        console.log(data); 
+        console.log(data.message); 
 
     } catch(error) {
         console.error("Error fetching data", error); 
@@ -42,10 +42,28 @@ async function update_email(new_email, user_id) {
             body: JSON.stringify({ new_email, user_id })
         }); 
             const data = response.json(); 
-            console.log(data); 
+            console.log(data.message); 
 
     } catch(error) {
         console.error('Error fetching data: ', error)
+    }
+}
+
+// delete account function 
+async function delete_account(user_id) {
+    try {
+        const response = await fetch('/api/delete_account', {
+            method: 'DELETE', 
+            headers: {
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify({user_id})
+        }); 
+
+        const data = await response.json(); 
+        console.log(data.message); 
+    } catch(error) {
+        console.error('Error fetching data: ', error); 
     }
 }
 
@@ -64,5 +82,10 @@ document.getElementById('update_email_button').addEventListener('click', (event)
     const new_email = document.getElementById('email_input').value; 
     
     update_email(new_email, user_id); 
+}); 
+
+document.getElementById('delete_account_button').addEventListener('click', () => {
+
+    delete_account(user_id); 
 }); 
 
