@@ -50,7 +50,7 @@ async function update_email(new_email, user_id) {
         }
 
     } catch(error) {
-        console.error('Error fetching data: ', error)
+        console.error('Error fetching data: ', error); 
     }
 }
 
