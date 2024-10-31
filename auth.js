@@ -9,7 +9,9 @@
      try {
          const payload = JSON.parse(atob(token.split('.')[1]));
          const isTokenExpired = payload.exp * 1000 < Date.now();
-
+ 
+         console.log(payload); 
+         
          if (isTokenExpired) {
              alert('Your session has expired. Please log in again.');
              localStorage.removeItem('token');
