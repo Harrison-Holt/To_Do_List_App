@@ -63,6 +63,6 @@ document.getElementById('update_email_button').addEventListener('click', (event)
 
     const new_email = document.getElementById('email_input').value; 
     
-    update_username(new_email, user_id); 
+    update_email(new_email, user_id); 
 }); 
 
