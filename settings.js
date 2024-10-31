@@ -43,11 +43,9 @@ async function update_email(new_email, user_id) {
             body: JSON.stringify({ new_email, user_id })
         }); 
 
-        if(response.ok) {
             const data = response.json(); 
             console.log(data.message); 
-            window.location.href = './login.html'; 
-        }
+
 
     } catch(error) {
         console.error('Error fetching data: ', error); 
@@ -65,8 +63,11 @@ async function delete_account(user_id) {
             body: JSON.stringify({user_id})
         }); 
 
-        const data = await response.json(); 
-        console.log(data.message); 
+        if(response.ok) {
+            const data = response.json(); 
+            console.log(data.message); 
+            window.location.href = './login.html'; 
+        } 
     } catch(error) {
         console.error('Error fetching data: ', error); 
     }
