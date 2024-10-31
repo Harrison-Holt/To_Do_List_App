@@ -21,7 +21,7 @@ document.getElementById("submit_login_button").addEventListener('click', async f
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('token', data.token); // Store the JWT token correctly
-            window.location.href = './inde.html'; // Redirect to the protected page
+            window.location.href = './index.html'; // Redirect to the protected page
         } else {
             const error = await response.json();
             alert(`Error: ${error.message}`); // Display error message from server
