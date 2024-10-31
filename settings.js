@@ -17,14 +17,13 @@ display_email.innerHTML = `${email}`;
 // update user info section 
 async function update_username(new_username, user_id) {
     try {
-        const response = await fetch('/api/update', {
+        const response = await fetch('/api/update_username', {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json'
             }, 
             body: JSON.stringify({ new_username, user_id })  
-        }
-    ); 
+     }); 
         const data = await response.json(); 
         console.log(data); 
 
@@ -32,6 +31,25 @@ async function update_username(new_username, user_id) {
         console.error("Error fetching data", error); 
     }
 }
+
+async function update_email(new_email, user_id) {
+    try {
+        const response = await fetch('/api/update_email', {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify({ new_email, user_id })
+        }); 
+            const data = response.json(); 
+            console.log(data); 
+
+    } catch(error) {
+        console.error('Error fetching data: ', error)
+    }
+}
+
+// button listeners for updating info 
 document.getElementById('update_username_button').addEventListener('click', (event) => {
     event.preventDefault(); 
 
@@ -39,3 +57,12 @@ document.getElementById('update_username_button').addEventListener('click', (eve
     
     update_username(new_username, user_id); 
 }); 
+
+document.getElementById('update_email_button').addEventListener('click', (event) => {
+    event.preventDefault(); 
+
+    const new_email = document.getElementById('email_input').value; 
+    
+    update_username(new_email, user_id); 
+}); 
+
