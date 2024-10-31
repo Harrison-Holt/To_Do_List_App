@@ -1,6 +1,7 @@
 let tasks_list = [];
 const { jsPDF } = window.jspdf || {};
 
+console.log(payload); 
 
 // Function to delete a task
 async function delete_task(task_id) {

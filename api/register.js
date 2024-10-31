@@ -31,7 +31,7 @@ export default async function handler(req, res) {
             { expiresIn: '1h' }
         ); 
 
-        res.status(201).json({ message: 'Account created successfully', token, account: { username: user.username } });
+        res.status(201).json({ message: 'Account created successfully', token, account: { username: user.username, email: user.email } });
     } catch (error) {
         console.error('Error occurred during request processing: ', error);
 
