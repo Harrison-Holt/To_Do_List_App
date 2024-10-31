@@ -26,7 +26,7 @@ export default async function handler(req, res) {
         const user = result.rows[0]; 
 
         const token = jwt.sign(
-            { userId: user.id, username: user.username }, 
+            { userId: user.id, username: user.username, email: user.email }, 
             process.env.JWT_SECRET, 
             { expiresIn: '1h' }
         ); 
