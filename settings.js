@@ -6,4 +6,7 @@ const token = localStorage.getItem('token');
 const payload = JSON.parse(atob(token.split('.')[1])); 
 
 console.log(payload); 
+console.log(payload.username); 
+
+display_username.textContent = payload.username; 
 
