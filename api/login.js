@@ -36,12 +36,12 @@ export default async function handler(req, res) {
 
         // Generate JWT token
         const token = jwt.sign(
-            { userId: user.id, username: user.username }, 
+            { userId: user.id, username: user.username, email: user.email }, 
             process.env.JWT_SECRET, 
             { expiresIn: '1hr' }
         );
 
-        res.status(200).json({ message: 'Login successful', token, account: { username: user.username } });
+        res.status(200).json({ message: 'Login successful', token, account: { username: user.username, email: user.email } });
     } catch (error) {
         console.error('Error occurred during request processing: ', error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message });
