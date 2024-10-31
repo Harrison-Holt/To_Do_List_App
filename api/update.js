@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     try {
 
         const result = await pool.query(
-            'UPDATE users SET username = $1 WHERE id = $2', 
+            'UPDATE accounts SET username = $1 WHERE id = $2', 
             [new_username, user_id]
         ); 
 
