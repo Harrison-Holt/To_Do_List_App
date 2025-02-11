@@ -52,6 +52,23 @@ async function update_email(new_email, user_id) {
     }
 }
 
+async function update_password(password, confirm_password) {
+    try {
+        const response = await fetch('/api/update_password', {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify({password, confirm_password})
+        }); 
+
+        const data = await response.json(); 
+        console.log(data); 
+        
+    } catch(error) {
+        console.error('Error fetching data: ', error); 
+    }
+}
 // delete account function 
 async function delete_account(user_id) {
     try {
@@ -90,8 +107,22 @@ document.getElementById('update_email_button').addEventListener('click', (event)
     update_email(new_email, user_id); 
 }); 
 
+document.getElementById('update_password_button').addEventListener('click', (event) => {
+    event.preventDefault(); 
+
+    const password = document.getElementById('password_input').value; 
+    const confirm_password = document.getElementById('confirm_password_input').value; 
+
+    if(password !== confirm_password) {
+        alert('Passwords Do Not Match! Try Again!'); 
+    } else {
+    update_password(password, confirm_password); 
+    }
+}); 
+
 document.getElementById('delete_account_button').addEventListener('click', () => {
 
     delete_account(user_id); 
 }); 
+
 

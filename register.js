@@ -17,61 +17,44 @@ function check_for_strong_password() {
 // Add an input event listener to validate the password in real-time
 document.getElementById('password').addEventListener('input', check_for_strong_password); 
 
-// Register form submission event listener
-document.getElementById("submit_register_button").addEventListener('click', async function(event) {
-    event.preventDefault(); 
+document.getElementById("submit_register_button").addEventListener("click", async function (event) {
+    event.preventDefault();
 
-    let username = document.getElementById("username").value.trim(); 
-    let email = document.getElementById("email").value.trim(); 
+    let username = document.getElementById("username").value.trim();
+    let email = document.getElementById("email").value.trim();
     let password_input = document.getElementById("password");
-    let password = password_input.value.trim(); 
+    let password = password_input.value.trim();
 
-    // Check if all fields are filled
     if (!username || !email || !password) {
-        alert("All fields are required!"); 
-        return; 
+        alert("All fields are required!");
+        return;
     }
 
-    // Check the password validity before submission
     check_for_strong_password();
-
-    // If password does not meet criteria, prevent form submission
     if (!password_input.checkValidity()) {
-        alert(password_input.validationMessage); // Show the custom error message
-        return; 
+        alert(password_input.validationMessage);
+        return;
     }
 
-    // Try to register the user
     try {
-        const response = await fetch('/api/register', {
-            method: 'POST', 
+        const response = await fetch("https://your-api-id.execute-api.us-east-1.amazonaws.com/prod/register", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
-            }, 
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({ username, email, password })
-        }); 
+        });
 
         if (response.ok) {
-            const data = await response.json();
-            localStorage.setItem('token', data.token); 
-            window.location.href = './index.html'; // Redirect on success
+            alert("Registration successful! Check your email to confirm.");
+            window.location.href = "./index.html";
         } else {
-            // Check if response is JSON
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                const error = await response.json();
-                alert(`Error: ${error.message}`); // Display error message
-                console.error("Error: ", error); 
-            } else {
-                // Handle non-JSON response (like HTML error pages)
-                const text = await response.text();
-                console.error("Unexpected response:", text);
-                alert("An unexpected error occurred. Please try again later.");
-            }
+            const error = await response.json();
+            alert(`Error: ${error.message}`);
+            console.error("Error:", error);
         }
     } catch (error) {
-        console.error("Error sending user data: ", error); 
-        alert("An error occurred. Please try again later."); 
+        console.error("Network error:", error);
+        alert("An error occurred. Please try again later.");
     }
 });
-

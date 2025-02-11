@@ -10,15 +10,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         return localStorage.getItem('token');
     }
 
-    // Function to convert time to 12-hour format with AM/PM
-    function convertTo12HourFormat(time) {
-        let [hours, minutes] = time.split(':');
-        hours = parseInt(hours);
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12; // Convert hour 0 to 12
-        return `${hours}:${minutes} ${ampm}`;
-    }
-
     // Function to convert date to MM-DD-YYYY format
     function formatDate(date) {
         const [year, month, day] = date.split('-');
