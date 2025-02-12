@@ -9,26 +9,26 @@ export const handler = async (event) => {
 
     try {
 
-        if(event.httpMethod !== 'PATCH') {
+        if(event.httpMethod !== 'GET') {
             return {
                 statusCode: 405,
-                body: JSON.stringify({ message: 'Only PATCH method is allowed!'})
+                body: JSON.stringify({ message: 'Only GET method is allowed!'})
             }
         } 
 
-        const { task_id, user_id } = JSON.parse(event.body); 
+        const { user_id } = JSON.parse(event.body); 
 
-        if( !task_id || !user_id ) {
+        if( !user_id ) {
             return {
                 statusCode: 400, 
-                body: JSON.stringify({ message: 'Task ID and User ID are required!'})
+                body: JSON.stringify({ message: 'User ID are required!'})
             }
         }
 
         const params = {
             FunctionName: process.env.PRIVATE_LAMBDA_ARN, 
             InvocationType: 'RequestResponse', 
-            Payload: JSON.stringify({task_id, user_id})
+            Payload: JSON.stringify({user_id})
         }
 
         const command = new InvokeCommand(params); 

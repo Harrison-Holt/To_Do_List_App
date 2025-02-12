@@ -1,0 +1,409 @@
+{
+	"info": {
+		"_postman_id": "04df05b4-f097-4d59-8e28-547a4123d90d",
+		"name": "To-Do List Backend API",
+		"description": "### **Postman Collection: AWS Serverless Task Management API**\n\n#### **📌 Overview**\n\nThis Postman collection provides a set of APIs for a **serverless task management system**, utilizing **AWS Cognito for authentication, API Gateway for routing, Lambda for backend logic, and RDS (MySQL) for data storage**.\n\n#### **🛠️ Key Features**\n\n- **User authentication & registration** using AWS Cognito.\n    \n- **Task management**: Users can create, update, retrieve, and delete tasks.\n    \n- **Serverless architecture**: Built with **AWS Lambda & API Gateway** for efficient scalability.\n    \n- **Role-based access**: APIs are protected with **Cognito JWT authorization**.\n    \n\n---\n\n#### **🔑 Authentication & Auto-Generated Variables**\n\n1. **Registration API**\n    \n    - **User Input Required:** ✅ **Email only**\n        \n    - **Auto-Saved Response:** `user_id` (used for future requests)\n        \n2. **Login API**\n    \n    - **Auto-Saved Response:**\n        \n        - `access_token` (used for authentication in all requests)\n            \n        - `user_id` (stored for task-related operations)\n            \n3. **Task APIs (Create, Update, Delete, Retrieve)**\n    \n    - `user_id` and `task_id` are automatically extracted and stored from previous API responses.\n        \n    - **No manual input required for these fields!**\n        \n\n---\n\n#### **📌 How to Use**\n\n1. **Run the Registration API** with your **email**.\n    \n2. **Check Postman Environment** – `user_id` is auto-saved.\n    \n3. **Login** – `access_token` is stored for authentication.\n    \n4. **Use Task APIs** – No need to manually enter `user_id` or `task_id`.\n    \n\n✅ **All authentication is handled automatically using AWS Cognito JWTs!**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30133676"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"if (response.user_id) {\r",
+							"    pm.environment.set(\"user_id\", response.user_id);\r",
+							"    console.log(\"✅ Access token saved!\");\r",
+							"} else {\r",
+							"    console.log(\"❌ Login failed: No access token received.\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"action\": \"register\",\r\n  \"username\": \"{{username}}\",\r\n  \"email\": \"\",\r\n  \"password\": \"{{password}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/registration",
+					"protocol": "https",
+					"host": [
+						"ssfjhkn9w2",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"action\": \"verify\",\r\n  \"username\": \"{{username}}\",\r\n  \"email\": \"\",\r\n  \"password\": \"{{password}}\", \r\n  \"confirmation_code\": \"{{confirmation_code}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/registration",
+					"protocol": "https",
+					"host": [
+						"ssfjhkn9w2",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"if (response.accessToken) {\r",
+							"    pm.environment.set(\"access_token\", response.accessToken);\r",
+							"    console.log(\"✅ Access token saved!\");\r",
+							"} else {\r",
+							"    console.log(\"❌ Login failed: No access token received.\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/login",
+					"protocol": "https",
+					"host": [
+						"ssfjhkn9w2",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"if (response.task_id) {\r",
+							"    pm.environment.set(\"task_id\", response.task_id);\r",
+							"    console.log(\"✅ Access token saved!\");\r",
+							"} else {\r",
+							"    console.log(\"❌ Login failed: No access token received.\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"{{user_id}}\", \r\n    \"task_name\": \"task example\",\r\n    \"task_date\": \"2025-08-08\",\r\n    \"task_time\": \"12:00 pm\",\r\n    \"task_priority\": \"high\",\r\n    \"task_completed\": \"false\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/create_task",
+					"protocol": "https",
+					"host": [
+						"ssfjhkn9w2",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"create_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tasks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/get_tasks?user_id={{user_id}}",
+					"protocol": "https",
+					"host": [
+						"ssfjhkn9w2",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"get_tasks"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "{{user_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"{{user_id}}\", \r\n    \"task_id\": \"{{task_id}}\",\r\n    \"task_name\": \"task example updated\",\r\n    \"task_date\": \"2025-08-08\",\r\n    \"task_time\": \"12:00 pm\",\r\n    \"task_priority\": \"high\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/update_task",
+					"protocol": "https",
+					"host": [
+						"ssfjhkn9w2",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"update_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Complete Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task_id\": \"{{task_id}}\",\r\n    \"user_id\": \"{{user_id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/complete_task",
+					"protocol": "https",
+					"host": [
+						"ssfjhkn9w2",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"complete_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task_id\": \"{{task_id}}\",\r\n    \"user_id\": \"{{user_id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/delete_task",
+					"protocol": "https",
+					"host": [
+						"ssfjhkn9w2",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"delete_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Account",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"user_id\": \"{{user_id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/delete_account",
+					"protocol": "https",
+					"host": [
+						"ssfjhkn9w2",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"delete_account"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
