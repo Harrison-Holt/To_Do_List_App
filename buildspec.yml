@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+    commands:
+      - npm install -g lighthouse pa11y newman
+      - npm install
+
+  build:
+    commands:
+      # ✅ Run Accessibility Tests (Lighthouse & Pa11y)
+      - echo "Running Lighthouse Accessibility Test..."
+      - lighthouse https://to-do-list-frontend.s3.us-east-1.amazonaws.com/static_files/index.html --output json --output-path ./lighthouse_report.json
+      - echo "Running Pa11y Accessibility Test..."
+      - pa11y https://to-do-list-frontend.s3.us-east-1.amazonaws.com/static_files/index.html --json > pa11y_results.json
+
+      # ✅ Run API Tests (Postman Collection)
+      - echo "Running Postman API Tests..."
+      - newman run To-Do-List-API.postman_environment.json --environment To-Do-List API.postman_environment.json --reporters cli,junit --reporter-junit-export newman-results.xml
+
+  post_build:
+    commands:
+      - echo "Tests Completed!"
+      - cat lighthouse_report.json
+      - cat pa11y_results.json
+      - cat newman-results.xml
