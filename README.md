@@ -45,9 +45,23 @@ This backend API provides **user authentication** and **task management** featur
 ✅ **Amazon EC2** – For direct database interaction and administration  
 ✅ **AWS IAM Roles** – Secure role-based access  
 ✅ **AWS CloudWatch** – Logs and monitoring  
-✅ **AWS SNS (Optional)** – Notifications  
 
 ---
 
 ## 🌐 Architecture Overview
+```ssh
+[Frontend] → API Gateway → 
+Public Lambda (Auth) →
+Cognito (User Management) →
+Public Lambda (Tasks) →
+Private Lambda → RDS (via VPC) →
+EC2 (For DB Administration) →
+ CloudWatch (Logging & Monitoring)
+```
 
+✅ **Public Lambdas: Handles user authentication (login, registration) and task requests
+✅ **Private Lambda: Handles secure interactions with Amazon RDS
+✅**Amazon Cognito: Manages user authentication and authorization
+✅ **Amazon RDS (MySQL/PostgreSQL): Stores tasks with user_id and task_id
+✅ **EC2 Instance: Allows manual database interaction for debugging
+✅ **API Gateway: Routes HTTP requests to the appropriate Lambda functions
