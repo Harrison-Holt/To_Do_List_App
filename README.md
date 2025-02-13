@@ -1,2 +1,53 @@
-This is my 2nd project in my web development portfolio. It is a To-Do List App using vanilla JS. The user is able to create sticky-note type cards to to show tasks to need to be completed. There is 4 categories the cards could be in: 1. Past Due, 2. Due Today, 3. Due Later, 4. Completed Tasks. 
-The link for this project is: https://todolistapp.harrisonholt.dev/
+# 📌 To-Do List Backend API 🚀
+
+AWS Serverless Backend for a **To-Do List App** using **Lambda, API Gateway, RDS (MySQL/PostgreSQL), Cognito, and EC2**.
+
+---
+
+## 📝 Table of Contents
+
+- [📌 Introduction](#📌-introduction)
+- [🛠 Tech Stack](#🛠-tech-stack)
+- [🌐 Architecture Overview](#🌐-architecture-overview)
+- [⚙️ Setup & Deployment](#⚙️-setup--deployment)
+- [🛠 API Endpoints](#🛠-api-endpoints)
+  - [1️⃣ User Registration](#1️⃣-user-registration)
+  - [2️⃣ User Login](#2️⃣-user-login)
+  - [3️⃣ Delete Account](#3️⃣-delete-account)
+  - [4️⃣ Create Task](#4️⃣-create-task)
+  - [5️⃣ Delete Task](#5️⃣-delete-task)
+  - [6️⃣ Update Task](#6️⃣-update-task)
+  - [7️⃣ Complete Task](#7️⃣-complete-task)
+  - [8️⃣ Get All Tasks](#8️⃣-get-all-tasks)
+- [🔒 Security & Authentication](#🔒-security--authentication)
+- [🛠 Testing with Postman](#🛠-testing-with-postman)
+- [📌 Future Improvements](#📌-future-improvements)
+
+---
+
+## 📌 Introduction
+
+This backend API provides **user authentication** and **task management** features using **AWS Cognito, Lambda, API Gateway, and RDS (MySQL/PostgreSQL)**.
+
+✅ Secure authentication with Cognito  
+✅ Serverless API with AWS Lambda  
+✅ Data storage in Amazon RDS (interacted via EC2)  
+✅ Public-private Lambda architecture for security  
+
+---
+
+## 🛠 Tech Stack
+
+✅ **AWS Lambda** – Serverless backend logic (Node.js)  
+✅ **Amazon API Gateway** – Routes HTTP requests  
+✅ **Amazon Cognito** – User authentication and token management  
+✅ **Amazon RDS (MySQL/PostgreSQL)** – Relational database storage  
+✅ **Amazon EC2** – For direct database interaction and administration  
+✅ **AWS IAM Roles** – Secure role-based access  
+✅ **AWS CloudWatch** – Logs and monitoring  
+✅ **AWS SNS (Optional)** – Notifications  
+
+---
+
+## 🌐 Architecture Overview
+
