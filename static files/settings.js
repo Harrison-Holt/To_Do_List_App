@@ -1,128 +1,80 @@
-// display user info section 
+// ✅ Display User Info Section
 const display_username = document.getElementById("username"); 
 const display_email = document.getElementById("email"); 
 
-const token = localStorage.getItem('token'); 
+document.addEventListener("DOMContentLoaded", async () => {
 
-const payload = JSON.parse(atob(token.split('.')[1])); 
+const token = localStorage.getItem('accessToken');
+const user_id = localStorage.getItem('user_id'); // ✅ Retrieve user_id directly
 
-const username = payload.username; 
-const email = payload.email; 
-const user_id = payload.userId; 
+if (!token || !user_id || isTokenExpired(token)) {
+    alert("⚠️ Unauthorized access. Please log in.");
+    window.location.href = './login.html'; // Redirect unauthorized users
+    return;
+}
+});
 
-display_username.innerHTML = `${username}`; 
-display_email.innerHTML = `${email}`; 
-
-
-// update user info section 
-async function update_username(new_username, user_id) {
+function isTokenExpired(token) {
     try {
-        const response = await fetch('/api/update_username', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            }, 
-            body: JSON.stringify({ new_username, user_id })  
-     }); 
-
-        const data = await response.json(); 
-        console.log(data.message); 
-
-    } catch(error) {
-        console.error("Error fetching data", error); 
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const expiry = payload.exp * 1000; // Convert to milliseconds
+        return Date.now() > expiry; // ✅ True if expired, false if still valid
+    } catch (error) {
+        console.error("❌ Error decoding token:", error);
+        return true; // ✅ Assume expired if decoding fails
     }
 }
 
-async function update_email(new_email, user_id) {
-    try {
-        const response = await fetch('/api/update_email', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            }, 
-            body: JSON.stringify({ new_email, user_id })
-        }); 
+try {
+    const payload = JSON.parse(atob(token.split('.')[1])); 
 
-            const data = response.json(); 
-            console.log(data.message); 
+    const username = payload.username || "Unknown User"; 
+    const email = payload.email || "No Email Found"; 
 
-
-    } catch(error) {
-        console.error('Error fetching data: ', error); 
-    }
+    display_username.innerHTML = `${username}`; 
+    display_email.innerHTML = `${email}`; 
+} catch (error) {
+    console.error("❌ Error decoding token:", error);
+    alert("⚠️ Invalid session. Please log in again.");
+    window.location.href = "./login.html";
 }
 
-async function update_password(password, confirm_password) {
+// ✅ Delete Account Function
+async function delete_account() {
     try {
-        const response = await fetch('/api/update_password', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            }, 
-            body: JSON.stringify({password, confirm_password})
-        }); 
-
-        const data = await response.json(); 
-        console.log(data); 
-        
-    } catch(error) {
-        console.error('Error fetching data: ', error); 
-    }
-}
-// delete account function 
-async function delete_account(user_id) {
-    try {
-        const response = await fetch('/api/delete_account', {
+        const response = await fetch('https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/delete_account', {
             method: 'DELETE', 
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // ✅ Ensure token is sent
             }, 
-            body: JSON.stringify({user_id})
+            body: JSON.stringify({ username, user_id }) // ✅ Send user_id from localStorage
         }); 
 
-        if(response.ok) {
-            const data = response.json(); 
-            console.log(data.message); 
+        if (response.ok) {
+            const data = await response.json();
+            console.log("✅", data.message);
+            alert("✅ Account deleted successfully.");
+            localStorage.clear(); // ✅ Remove user session
             window.location.href = './login.html'; 
-        } 
-    } catch(error) {
-        console.error('Error fetching data: ', error); 
+        } else {
+            const errorText = await response.text();
+            console.error("❌ Failed to delete account:", errorText);
+            alert("⚠️ Failed to delete account. Please try again.");
+        }
+    } catch (error) {
+        console.error('❌ Error deleting account:', error);
+        alert("⚠️ Error deleting account. Please try again.");
     }
 }
 
-// button listeners for updating info 
-document.getElementById('update_username_button').addEventListener('click', (event) => {
-    event.preventDefault(); 
-
-    const new_username = document.getElementById('username_input').value; 
-    
-    update_username(new_username, user_id); 
-}); 
-
-document.getElementById('update_email_button').addEventListener('click', (event) => {
-    event.preventDefault(); 
-
-    const new_email = document.getElementById('email_input').value; 
-    
-    update_email(new_email, user_id); 
-}); 
-
-document.getElementById('update_password_button').addEventListener('click', (event) => {
-    event.preventDefault(); 
-
-    const password = document.getElementById('password_input').value; 
-    const confirm_password = document.getElementById('confirm_password_input').value; 
-
-    if(password !== confirm_password) {
-        alert('Passwords Do Not Match! Try Again!'); 
-    } else {
-    update_password(password, confirm_password); 
-    }
-}); 
-
+// ✅ Attach Delete Button Event Listener
 document.getElementById('delete_account_button').addEventListener('click', () => {
+    const confirmDelete = confirm("⚠️ Are you sure you want to delete your account? This action is irreversible.");
+    if (confirmDelete) {
+        delete_account(); 
+    }
+});
 
-    delete_account(user_id); 
-}); 
 
 

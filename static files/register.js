@@ -16,7 +16,6 @@ function check_for_strong_password() {
 
 // Add an input event listener to validate the password in real-time
 document.getElementById('password').addEventListener('input', check_for_strong_password); 
-
 // Register Button Click Handler
 document.getElementById("submit_register_button").addEventListener("click", async function (event) {
     event.preventDefault();
@@ -53,7 +52,16 @@ document.getElementById("submit_register_button").addEventListener("click", asyn
         });
 
         if (response.ok) {
+            const responseData = await response.json(); // ✅ Extract response JSON
             alert("Registration successful! Check your email for the confirmation code.");
+
+            // ✅ Ensure user_id is present before storing it
+            if (responseData.user_id) {
+                localStorage.setItem("user_id", responseData.user_id);
+                console.log("✅ User ID stored:", responseData.user_id);
+            } else {
+                console.warn("❌ No user_id returned from API.");
+            }
         } else {
             const error = await response.json();
             alert(`Error: ${error.message}`);
@@ -64,6 +72,7 @@ document.getElementById("submit_register_button").addEventListener("click", asyn
         alert("An error occurred. Please try again later.");
     }
 });
+
 
 // Verification Button Click Handler
 document.getElementById("submit_register_verify").addEventListener("click", async function (event) {
