@@ -1,6 +1,7 @@
 let tasks_list = [];
 const { jsPDF } = window.jspdf || {};
 
+
 async function delete_task(task_id) {
 
     try {
@@ -116,6 +117,29 @@ async function get_tasks() {
 
 document.addEventListener("DOMContentLoaded", async () => {
 
+    const accessToken = localStorage.getItem("accessToken"); 
+    const user_id = localStorage.getItem("user_id"); 
+
+
+    if (!accessToken || !idToken || !user_id || isTokenExpired(accessToken)) {
+        showNotification("⚠️ Unauthorized access. Please log in.", "warning");
+        window.location.href = "./login.html"; // Redirect to login page
+        return;
+    }
+
+    console.log("✅ User is authenticated.");
+
+// Function to Check if Token is Expired
+function isTokenExpired(token) {
+    try {
+        const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
+        const expiry = payload.exp * 1000; // Convert to milliseconds
+        return Date.now() > expiry; 
+    } catch (error) {
+        console.error("❌ Error decoding token:", error);
+        return true; // Assume expired if decoding fails
+    }
+}
     await get_tasks(); 
     renderTasks(tasks_list);
 
