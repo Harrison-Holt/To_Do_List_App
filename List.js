@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const user_id = localStorage.getItem("user_id"); 
 
 
-    if (!accessToken || !idToken || !user_id || isTokenExpired(accessToken)) {
+    if (!accessToken || !user_id || isTokenExpired(accessToken)) {
         showNotification("⚠️ Unauthorized access. Please log in.", "warning");
         window.location.href = "./login.html"; // Redirect to login page
         return;
