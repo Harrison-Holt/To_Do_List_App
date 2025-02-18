@@ -26,13 +26,13 @@ document.getElementById("submit_register_button").addEventListener("click", asyn
     let password = password_input.value.trim();
 
     if (!username || !email || !password) {
-        alert("All fields are required!");
+        showNotification("All fields are required!", "warning");
         return;
     }
 
     check_for_strong_password();
     if (!password_input.checkValidity()) {
-        alert(password_input.validationMessage);
+        showNotification(password_input.validationMessage, "warning");
         return;
     }
 
@@ -52,10 +52,9 @@ document.getElementById("submit_register_button").addEventListener("click", asyn
         });
 
         if (response.ok) {
-            const responseData = await response.json(); // ✅ Extract response JSON
-            alert("Registration successful! Check your email for the confirmation code.");
+            const responseData = await response.json(); 
+            showNotification("Registration successful! Check your email for the confirmation code.");
 
-            // ✅ Ensure user_id is present before storing it
             if (responseData.user_id) {
                 localStorage.setItem("user_id", responseData.user_id);
                 console.log("✅ User ID stored:", responseData.user_id);
@@ -64,12 +63,12 @@ document.getElementById("submit_register_button").addEventListener("click", asyn
             }
         } else {
             const error = await response.json();
-            alert(`Error: ${error.message}`);
+            showNotification(`Error: ${error.message}`, "error");
             console.error("Error:", error);
         }
     } catch (error) {
         console.error("Network error:", error);
-        alert("An error occurred. Please try again later.");
+        showNotification("An error occurred. Please try again later.", "error");
     }
 });
 
@@ -84,7 +83,7 @@ document.getElementById("submit_register_verify").addEventListener("click", asyn
     let confirmation_code = document.getElementById("confirmation_code").value.trim();
 
     if (!username || !email || !password || !confirmation_code) {
-        alert("All fields are required for verification!");
+        showNotification("All fields are required for verification!");
         return;
     }
 
@@ -104,15 +103,26 @@ document.getElementById("submit_register_verify").addEventListener("click", asyn
         });
 
         if (response.ok) {
-            alert("Verification successful! You can now log in.");
+            showNotification("Verification successful! You can now log in.", "success");
             window.location.href = "./login.html";
         } else {
             const error = await response.json();
-            alert(`Error: ${error.message}`);
+            showNotification(`Error: ${error.message}`, "error");
             console.error("Error:", error);
         }
     } catch (error) {
         console.error("Network error:", error);
-        alert("An error occurred. Please try again later.");
+        showNotification("An error occurred. Please try again later.", "error");
     }
 });
+
+function showNotification(message, type = "success", duration = 6000) {
+    const notification = document.getElementById("notification");
+    notification.innerText = message;
+    notification.className = `notification ${type} show`;
+
+    // Hide after a few seconds
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, duration);
+}

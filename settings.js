@@ -1,74 +1,86 @@
-// ✅ Display User Info Section
 const display_username = document.getElementById("username"); 
 const display_email = document.getElementById("email"); 
 
 document.addEventListener("DOMContentLoaded", async () => {
+    const accessToken = localStorage.getItem("accessToken"); 
+    const idToken = localStorage.getItem("idToken");
+    const user_id = localStorage.getItem("user_id"); 
+    const display_username = document.getElementById("username");
+    const display_email = document.getElementById("email");
 
-const token = localStorage.getItem('accessToken');
-const user_id = localStorage.getItem('user_id'); // ✅ Retrieve user_id directly
+    if (!accessToken || !idToken || !user_id || isTokenExpired(accessToken)) {
+        showNotification("⚠️ Unauthorized access. Please log in.", "warning");
+        window.location.href = "./login.html"; // Redirect to login page
+        return;
+    }
 
-if (!token || !user_id || isTokenExpired(token)) {
-    alert("⚠️ Unauthorized access. Please log in.");
-    window.location.href = './login.html'; // Redirect unauthorized users
-    return;
-}
-});
+    console.log("✅ User is authenticated.");
 
-function isTokenExpired(token) {
     try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const expiry = payload.exp * 1000; // Convert to milliseconds
-        return Date.now() > expiry; // ✅ True if expired, false if still valid
+        const accessPayload = JSON.parse(atob(accessToken.split(".")[1])); 
+        const username = accessPayload.username || "Unknown User"; 
+
+        const idPayload = JSON.parse(atob(idToken.split(".")[1])); 
+        const email = idPayload.email || "No Email Found";
+
+        console.log("🔹 Username:", username);
+        console.log("🔹 Email:", email);
+
+        if (display_username) display_username.textContent = username;
+        if (display_email) display_email.textContent = email;
     } catch (error) {
         console.error("❌ Error decoding token:", error);
-        return true; // ✅ Assume expired if decoding fails
+        showNotification("⚠️ Session expired. Please log in again.", "error");
+        window.location.href = "./login.html";
+    }
+});
+
+// Function to Check if Token is Expired
+function isTokenExpired(token) {
+    try {
+        const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
+        const expiry = payload.exp * 1000; // Convert to milliseconds
+        return Date.now() > expiry; 
+    } catch (error) {
+        console.error("❌ Error decoding token:", error);
+        return true; // Assume expired if decoding fails
     }
 }
 
-try {
-    const payload = JSON.parse(atob(token.split('.')[1])); 
-
-    const username = payload.username || "Unknown User"; 
-    const email = payload.email || "No Email Found"; 
-
-    display_username.innerHTML = `${username}`; 
-    display_email.innerHTML = `${email}`; 
-} catch (error) {
-    console.error("❌ Error decoding token:", error);
-    alert("⚠️ Invalid session. Please log in again.");
-    window.location.href = "./login.html";
-}
-
-// ✅ Delete Account Function
+    
 async function delete_account() {
+    const token = localStorage.getItem("accessToken"); 
+    const user_id = localStorage.getItem("user_id"); 
+
+    const accessPayload = JSON.parse(atob(token.split(".")[1])); 
+    const username = accessPayload.username; 
     try {
         const response = await fetch('https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/delete_account', {
             method: 'DELETE', 
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // ✅ Ensure token is sent
+                'Authorization': `Bearer ${token}` 
             }, 
-            body: JSON.stringify({ username, user_id }) // ✅ Send user_id from localStorage
+            body: JSON.stringify({ username, user_id })
         }); 
 
         if (response.ok) {
             const data = await response.json();
             console.log("✅", data.message);
-            alert("✅ Account deleted successfully.");
-            localStorage.clear(); // ✅ Remove user session
+            ("✅ Account deleted successfully.");
+            localStorage.clear();
             window.location.href = './login.html'; 
         } else {
             const errorText = await response.text();
             console.error("❌ Failed to delete account:", errorText);
-            alert("⚠️ Failed to delete account. Please try again.");
+            showNotification("⚠️ Failed to delete account. Please try again.", "error");
         }
     } catch (error) {
         console.error('❌ Error deleting account:', error);
-        alert("⚠️ Error deleting account. Please try again.");
+        showNotification("⚠️ Error deleting account. Please try again.", "error");
     }
 }
 
-// ✅ Attach Delete Button Event Listener
 document.getElementById('delete_account_button').addEventListener('click', () => {
     const confirmDelete = confirm("⚠️ Are you sure you want to delete your account? This action is irreversible.");
     if (confirmDelete) {
@@ -76,5 +88,14 @@ document.getElementById('delete_account_button').addEventListener('click', () =>
     }
 });
 
+function showNotification(message, type = "success", duration = 6000) {
+    const notification = document.getElementById("notification");
+    notification.innerText = message;
+    notification.className = `notification ${type} show`;
 
+    // Hide after a few seconds
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, duration);
+}
 

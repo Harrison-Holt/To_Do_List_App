@@ -19,23 +19,25 @@
             </div>
         </header>
         <main class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-dark">
+            <div id="notification" class="notification"></div>
+
             <section class="add_task_container w-50">
                 <form id="taskForm" class="p-4 rounded shadow bg-light">
                     <div class="mb-3">
                         <label for="task_name" class="form-label">Enter Task Name:</label>
-                        <input type="text" id="task_name" class="form-control" required>
+                        <input type="text" id="task_name" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label for="due_date" class="form-label">Enter Due Date:</label>
-                        <input type="date" id="due_date" class="form-control" required>
+                        <input type="date" id="due_date" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label for="due_time" class="form-label">Enter Due Time:</label>
-                        <input type="time" id="due_time" class="form-control" required>
+                        <input type="time" id="due_time" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label for="select_priority" class="form-label">Select Priority:</label>
-                        <select name="priority" id="select_priority" class="form-select" required>
+                        <select name="priority" id="select_priority" class="form-select">
                             <option value="high">High</option>
                             <option value="medium">Medium</option>
                             <option value="low">Low</option>

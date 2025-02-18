@@ -32,3 +32,30 @@ i:hover {
 }
 
 
+.notification {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50; /* Green for success */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    font-size: 16px;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification.error {
+    background-color: #f44336; /* Red for errors */
+}
+
+.notification.warning {
+    background-color: #ff9800; /* Orange for warnings */
+}
+
+.notification.show {
+    display: block;
+}

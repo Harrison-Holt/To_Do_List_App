@@ -9,7 +9,7 @@ async function delete_task(task_id) {
 
         if (!user_id) {
             console.error("❌ User ID not found in localStorage.");
-            alert("⚠️ User ID missing. Please log in again.");
+            showNotification("⚠️ User ID missing. Please log in again.", "warning");
             return;
         }
 
@@ -30,32 +30,31 @@ async function delete_task(task_id) {
         if (!response.ok) {
             const errorText = await response.text();
             console.error("❌ Failed to delete task:", errorText);
-            alert("⚠️ Failed to delete task. Please try again later.");
+            showNotification("⚠️ Failed to delete task. Please try again later.", "error");
             return;
         }
 
         console.log("✅ Task deleted successfully");
 
-        // ✅ Remove task from `tasks_list` in memory
         tasks_list = tasks_list.filter(task => task.task_id !== task_id);
         
-        // ✅ Clear UI if no tasks remain
+        // Clear UI if no tasks remain
         if (tasks_list.length === 0) {
             console.log("ℹ️ No tasks left. Clearing UI.");
             clearTaskContainers();
         } else {
-            renderTasks(tasks_list); // ✅ Re-render updated task list
+            renderTasks(tasks_list); // Re-render updated task list
         }
 
-        alert("🗑️ Task deleted successfully!");
+        showNotification("🗑️ Task deleted successfully!", "success");
 
     } catch (error) {
         console.error("❌ Error deleting task:", error);
-        alert("⚠️ Error deleting task. Please try again later.");
+        showNotification("⚠️ Error deleting task. Please try again later.", "error");
     }
 }
 
-// ✅ Function to clear all task containers
+//  Function to clear all task containers
 function clearTaskContainers() {
     document.querySelector('.tasks_today').innerHTML = '';
     document.querySelector('.later_tasks').innerHTML = '';
@@ -71,7 +70,7 @@ async function get_tasks() {
 
         if (!user_id) {
             console.error("❌ User ID not found in localStorage.");
-            alert("⚠️ User ID missing. Please log in again.");
+            showNotification("⚠️ User ID missing. Please log in again.", "warning");
             return;
         }
 
@@ -87,27 +86,27 @@ async function get_tasks() {
 
         if (!response.ok) {
             console.error("❌ Failed to fetch tasks:", response.statusText);
-            alert("⚠️ Failed to fetch tasks. Please try again later.");
+            showNotification("⚠️ Failed to fetch tasks. Please try again later.", "error");
             return;
         }
 
         const data = await response.json();
         tasks_list = data.tasks.map(task => ({
             ...task,
-            task_completed: task.task_completed.toString() // ✅ Ensure it's always a string
+            task_completed: task.task_completed.toString() 
         }));
 
         console.log("✅ Fetched tasks successfully:", tasks_list);
 
         if (tasks_list.length === 0) {
-            alert("ℹ️ No tasks found. Start by adding a new task!");
+            showNotification("ℹ️ No tasks found. Start by adding a new task!", "warning");
         } else {
             renderTasks(tasks_list); 
         }
 
     } catch (error) {
         console.error("❌ Error fetching tasks:", error);
-        alert("⚠️ Error fetching tasks. Please try again later.");
+        showNotification("⚠️ Error fetching tasks. Please try again later.", "error");
     }
 }
 
@@ -117,29 +116,8 @@ async function get_tasks() {
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-
-        const token = localStorage.getItem('accessToken');
-        const user_id = localStorage.getItem('user_id'); // ✅ Retrieve user_id directly
-        
-        if (!token || !user_id || isTokenExpired(token)) {
-            alert("⚠️ Unauthorized access. Please log in.");
-            window.location.href = './login.html'; // Redirect unauthorized users
-            return;
-        }
-        
-    
-    function isTokenExpired(token) {
-        try {
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            const expiry = payload.exp * 1000; // Convert to milliseconds
-            return Date.now() > expiry; // ✅ True if expired, false if still valid
-        } catch (error) {
-            console.error("❌ Error decoding token:", error);
-            return true; // ✅ Assume expired if decoding fails
-        }
-    }
-    await get_tasks(); // ✅ Ensure tasks are fetched before rendering
-    renderTasks(tasks_list); // ✅ Use updated `tasks_list`
+    await get_tasks(); 
+    renderTasks(tasks_list);
 
     const add_task_button = document.getElementById("add_task_button");
     const export_task_button = document.getElementById("export_task_button");
@@ -156,31 +134,53 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
-// Function to export tasks to PDF
 function export_tasks(tasks) {
-
-    if(!tasks || tasks.length === 0) {
-        alert("no tasks to export!"); 
-        return; 
+    if (!tasks || tasks.length === 0) {
+        showNotification("No tasks to export!", "error");
+        return;
     }
 
     const doc = new jsPDF();
-    let y = 10;
-    tasks.forEach(task => {
-        doc.text(10, y, `Task: ${task.task_name}`);
-        y += 10;
-        doc.text(10, y, `Due Date: ${formatDate(task.task_due_date)}`);
-        y += 10;F
-        doc.text(10, y, `Due Time: ${formatTime(task.task_due_time)}`);
-        y += 10;
-        doc.text(10, y, `Priority: ${task.task_priority}`);
-        y += 10;
-        doc.text(10, y, `Completed: ${task.task_completed}`);
-        y += 20;
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("Task List", 14, 15); // Title
+    
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+
+    // Prepare table headers & data
+    const headers = [["Task Name", "Due Date", "Due Time", "Priority", "Completed"]];
+    const data = tasks.map(task => [
+        task.task_name,
+        formatDate(task.task_date),
+        formatTime(task.task_time),
+        task.task_priority,
+        task.task_completed === "1" ? "Yes" : "No" // Convert boolean to readable format
+    ]);
+
+    // Add autoTable for better layout
+    doc.autoTable({
+        startY: 20,
+        head: headers,
+        body: data,
+        theme: "grid", // Makes the table structured
+        styles: {
+            halign: "center", // Center align text
+            fontSize: 10,
+        },
+        headStyles: {
+            fillColor: [40, 40, 40], // Dark header
+            textColor: [255, 255, 255], // White text
+            fontStyle: "bold",
+        },
+        alternateRowStyles: {
+            fillColor: [245, 245, 245], // Light gray for alternating rows
+        },
     });
 
-    doc.save('tasks.pdf');
+    doc.save("tasks.pdf");
 }
+
 
 async function complete_task(task_id) {
     try {
@@ -189,7 +189,7 @@ async function complete_task(task_id) {
 
         if (!user_id) {
             console.error("❌ User ID not found in localStorage.");
-            alert("⚠️ User ID missing. Please log in again.");
+            showNotification("⚠️ User ID missing. Please log in again.", "warning");
             return;
         }
 
@@ -212,28 +212,27 @@ async function complete_task(task_id) {
         if (!response.ok) {
             const errorText = await response.text();
             console.error("❌ Failed to complete task:", errorText);
-            alert("⚠️ Failed to complete task. Please try again later.");
+            showNotification("⚠️ Failed to complete task. Please try again later.", "error");
             return;
         }
 
         const data = await response.json();
         console.log('✅ Task completed successfully:', data);
 
-        // ✅ Ensure the global tasks list updates with `true` as a boolean
         tasks_list = tasks_list.map(task => {
             if (task.task_id == task_id) { 
-                return { ...task, task_completed: true }; // ✅ Store as a boolean
+                return { ...task, task_completed: true }; 
             }
             return task;
         });
 
-        renderTasks(tasks_list); // ✅ Re-render the task list
+        renderTasks(tasks_list); 
 
-        alert("✅ Task marked as completed!");
+        showNotification("✅ Task marked as completed!");
 
     } catch (error) {
         console.error("❌ Error completing task:", error);
-        alert("⚠️ Error completing task. Please try again later.");
+        showNotification("⚠️ Error completing task. Please try again later.", "error");
     }
 }
 
@@ -257,7 +256,6 @@ function renderTasks(tasks) {
     tasks.forEach(task => {
         const task_card = create_task_card(task);
 
-        // ✅ Convert `task_completed` from a string to a boolean
         const isCompleted = task.task_completed === "1" || task.task_completed === 1 || task.task_completed === true; 
 
         // Convert task date to local date format
@@ -322,7 +320,6 @@ function create_task_card(task) {
         edit_task_by_details(task.task_name, task.task_date, task.task_time, task.task_priority);
     };
 
-    // ✅ Convert `task_completed` to boolean
     const isCompleted = task.task_completed === "1" || task.task_completed === 1 || task.task_completed === true; 
 
     // Adjust the date to local time zone and format it
@@ -349,10 +346,9 @@ function create_task_card(task) {
         task_card.appendChild(complete_task_button);
         task_card.appendChild(edit_task_button);
     } else {
-        // ✅ Task is completed: Apply proper styling
         list_items.innerHTML += `<br><br><span> ✅ Task Completed! </span>`;
-        task_card.style.backgroundColor = 'lightgray'; // ✅ Light gray background for completed tasks
-        list_items.style.color = 'black'; // ✅ Ensure text color remains readable
+        task_card.style.backgroundColor = 'lightgray';
+        list_items.style.color = 'black';
     }
 
     return task_card;
@@ -438,9 +434,8 @@ function formatTime(timeString) {
     return `${formattedHour}:${minute} ${ampm}`;
 }
 
-// ✅ Fetch and display the quote of the day with authentication
+// Fetch and display the quote of the day with authentication
 function get_quote_of_the_day() {
-    const quotesContainer = document.getElementById("quotes");
     const currentDate = new Date().toISOString().slice(0, 10); // ISO format: YYYY-MM-DD
 
     let storedQuoteData = localStorage.getItem('dailyQuote');
@@ -458,7 +453,6 @@ function get_quote_of_the_day() {
         return;
     }
 
-    // Replace API Ninjas with Your AWS Lambda API Gateway URL
     const apiLink = `https://ssfjhkn9w2.execute-api.us-east-1.amazonaws.com/dev/get_quote`;
 
     fetch(apiLink, {
@@ -490,7 +484,7 @@ function get_quote_of_the_day() {
     });
 }
 
-// ✅ Display the quote
+// Display the quote
 function displayQuote(quote, author) {
     const quoteElement = document.createElement('p');
     quoteElement.innerHTML = `"${quote}"<br> -${author}`;
@@ -510,6 +504,16 @@ function displayQuote(quote, author) {
     document.getElementById("quotes").appendChild(quoteElement);
 }
 
+function showNotification(message, type = "success", duration = 10000) {
+    const notification = document.getElementById("notification");
+    notification.innerText = message;
+    notification.className = `notification ${type} show`;
+
+    // Hide after a few seconds
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, duration);
+}
 
 
 

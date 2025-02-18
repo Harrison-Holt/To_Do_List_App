@@ -5,7 +5,7 @@ document.getElementById("submit_login_button").addEventListener("click", async f
     let password = document.getElementById("password").value.trim();
 
     if (!username || !password) {
-        alert("All fields are required!");
+        showNotification("All fields are required!", "error");
         return;
     }
 
@@ -21,32 +21,43 @@ document.getElementById("submit_login_button").addEventListener("click", async f
         if (response.ok) {
             const data = await response.json();
 
-            // ✅ Store authentication tokens in localStorage
+            // Store authentication tokens in localStorage
             localStorage.setItem("accessToken", data.accessToken);
             localStorage.setItem("idToken", data.idToken);
             localStorage.setItem("refreshToken", data.refreshToken);
 
             console.log("✅ Tokens saved successfully!");
 
-            // ✅ Decode the JWT to extract `user_id`
+            // Decode the JWT to extract `user_id`
             const decodedPayload = JSON.parse(atob(data.idToken.split(".")[1]));
             const user_id = decodedPayload.sub; // Cognito's unique user identifier
 
-            // ✅ Store `user_id` in localStorage
+            // Store `user_id` in localStorage
             localStorage.setItem("user_id", user_id);
 
             console.log("✅ User ID stored:", user_id);
 
-            alert("Login Successful!");
+            showNotification("Login Successful!", "success");
             window.location.href = "./index.html"; // Redirect to homepage
 
         } else {
             const error = await response.json();
-            alert(`Error: ${error.message}`);
+            showNotification(`Error: ${error.message}`, "error");
             console.error("❌ Login failed:", error);
         }
     } catch (error) {
         console.error("❌ Network error:", error);
-        alert("An error occurred. Please try again later.");
+        showNotification("An error occurred. Please try again later.", "error");
     }
 });
+
+function showNotification(message, type = "success", duration = 6000) {
+    const notification = document.getElementById("notification");
+    notification.innerText = message;
+    notification.className = `notification ${type} show`;
+
+    // Hide after a few seconds
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, duration);
+}

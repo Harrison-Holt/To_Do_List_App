@@ -13,25 +13,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     function isTokenExpired(token) {
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
-            const expiry = payload.exp * 1000; // Convert to milliseconds
-            return Date.now() > expiry; // ✅ True if expired, false if valid
+            const expiry = payload.exp * 1000; 
+            return Date.now() > expiry; 
         } catch (error) {
             console.error("❌ Error decoding token:", error);
-            return true; // ✅ Assume expired if decoding fails
+            return true; 
         }
     }
 
     function getTaskFromList(task_id) {
-        return tasks_list.find((task) => task.task_id === Number(task_id)); // ✅ Convert task_id to a number
+        return tasks_list.find((task) => task.task_id === Number(task_id)); 
     }
 
-    // ✅ Check Authentication
+    // Check Authentication
     const token = getToken();
     const user_id = getUserId();
 
     if (!token || !user_id || isTokenExpired(token)) {
-        alert("⚠️ Unauthorized access. Please log in.");
-        window.location.href = './login.html'; // ✅ Redirect unauthorized users
+        showNotification("⚠️ Unauthorized access. Please log in.", "warning");
+        window.location.href = './login.html'; 
         return;
     }
 
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         try {
             const user_id = getUserId();
             if (!user_id) {
-                alert("⚠️ User ID missing. Please log in again.");
+                showNotification("⚠️ User ID missing. Please log in again.", "warning");
                 return;
             }
 
@@ -81,12 +81,12 @@ document.addEventListener("DOMContentLoaded", async function () {
                     document.getElementById("select_priority").value = task_info.task_priority;
                 } else {
                     console.error("❌ Task NOT found!");
-                    alert("⚠️ Task not found.");
+                    showNotification("⚠️ Task not found.", "error");
                 }
             }
         } catch (error) {
             console.error("❌ Error fetching tasks:", error);
-            alert("⚠️ Failed to load task data. Please try again.");
+            showNotification("⚠️ Failed to load task data. Please try again.", "error");
         }
     }
 
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const user_id = getUserId();
 
         if (!task_name || !task_date || !task_time || !task_priority) {
-            alert("⚠️ Please fill out all required fields.");
+            showNotification("⚠️ Please fill out all required fields.", "warning");
             return;
         }
 
@@ -136,11 +136,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                 throw new Error("Failed to save task data");
             }
 
-            alert(task_info ? "✅ Task updated successfully!" : "✅ Task created successfully!");
+            showNotification(task_info ? "✅ Task updated successfully!" : "✅ Task created successfully!");
             window.location.href = "index.html";
         } catch (error) {
             console.error("❌ Error saving task:", error);
-            alert("⚠️ Failed to save task. Please try again.");
+            showNotification("⚠️ Failed to save task. Please try again.", "error");
         }
     });
 
@@ -148,3 +148,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 
+function showNotification(message, type = "success", duration = 7000) {
+    const notification = document.getElementById("notification");
+    notification.innerText = message;
+    notification.className = `notification ${type} show`;
+
+    // Hide after a few seconds
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, duration);
+}
