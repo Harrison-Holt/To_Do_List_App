@@ -5,14 +5,13 @@ phases:
     runtime-versions:
       nodejs: 16
     commands:
-      - echo "Installing global dependencies..."
-      - npm install
+      - echo Installing...
 
   build:
     commands:
-      - echo "Skipping tests... just updating frontend."
+      - echo Build step...
 
-  post_build:
-    commands:
-      - echo "Build phase complete. Frontend changes should now deploy if CodePipeline is set up properly."
-
+artifacts:
+  files:
+    - '**/*'
+  base-directory: .
