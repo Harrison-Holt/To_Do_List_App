@@ -12,7 +12,7 @@ phases:
     commands:
       # ✅ Run Accessibility Tests (Lighthouse & Pa11y)
       - echo "Running Lighthouse Accessibility Test..."
-      - lighthouse https://to-do-list-frontend.s3.us-east-1.amazonaws.com/static_files/index.html --output json --output-path ./lighthouse_report.json
+      - lighthouse https://to-do-list-frontend.s3.us-east-1.amazonaws.com/static_files/index.html --output json --output-path ./lighthouse_report.json --chrome-flags="--no-sandbox"
       - echo "Running Pa11y Accessibility Test..."
       - pa11y https://to-do-list-frontend.s3.us-east-1.amazonaws.com/static_files/index.html --json > pa11y_results.json
 
