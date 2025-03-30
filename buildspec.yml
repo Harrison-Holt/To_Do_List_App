@@ -1,17 +1,11 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      nodejs: 16
-    commands:
-      - echo Installing...
-
   build:
     commands:
-      - echo Build step...
+      - echo "Skipping actual build"
 
 artifacts:
   files:
     - '**/*'
-  base-directory: .
+  base-directory: frontend  
