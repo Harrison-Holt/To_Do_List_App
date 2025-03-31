@@ -6,6 +6,7 @@ export const handler = async (event) => {
     const api_key = process.env.API_KEY;
 
     console.log("Incoming request:", JSON.stringify(event, null, 2)); // ✅ Debug incoming request
+    console.log("New CodeBuild"); // ✅ Debug incoming request
 
     // ✅ Handle CORS Preflight (OPTIONS Request)
     if (event.httpMethod === "OPTIONS") {
@@ -19,6 +20,8 @@ export const handler = async (event) => {
             body: JSON.stringify({ message: "CORS preflight successful" }),
         };
     }
+
+
 
     try {
         const response = await fetch('https://api.api-ninjas.com/v1/quotes', {
