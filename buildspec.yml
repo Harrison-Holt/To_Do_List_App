@@ -10,41 +10,40 @@ phases:
     runtime-versions:
       nodejs: 16
     commands:
-      - echo "Installing AWS CLI..."
-      - npm install -g aws-cli zip
+      - echo "Installing AWS CLI and zip utility..."
+      - npm install -g aws-cli
+      - yum install -y zip
 
   build:
     commands:
       - echo "Zipping and uploading Lambda functions..."
+      - |
+        for dir in Lambda/*/ ; do
+          fname=$(basename "$dir")
+          echo "📦 Zipping and uploading Lambda function: $fname"
 
-     # Loop through Lambda directories and zip/upload each one
-- |
-  for dir in Lambda/*/ ; do
-    fname=$(basename "$dir")
-    echo "Zipping and uploading Lambda function: $fname"
+          cd "$dir" || exit 1
 
-    cd "$dir" || exit 1
+          # Install production-only dependencies if package.json exists
+          if [ -f package.json ]; then
+            npm install --only=production
+          fi
 
-    # Install production-only dependencies (if using package.json)
-    if [ -f package.json ]; then
-      npm install --only=production
-    fi
+          # Remove local .env (optional, security best practice)
+          rm -f .env
 
-    # Remove local .env files (optional but recommended for security)
-    rm -f .env
+          # Create zip package excluding unnecessary files
+          zip -r function.zip . -x "*.test.js" -x "*.spec.js" -x "node_modules/aws-sdk/*"
 
-    # Zip the function including node_modules, but excluding unneeded files
-    zip -r function.zip . -x "*.test.js" -x "*.spec.js" -x "node_modules/aws-sdk/*"
+          # Upload to S3
+          aws s3 cp function.zip "s3://$S3_BUCKET/$LAMBDA_BASE_PATH/$fname/function.zip"
 
-    # Upload to S3
-    aws s3 cp function.zip "s3://$S3_BUCKET/$LAMBDA_BASE_PATH/$fname/function.zip"
-
-    cd - || exit 1
-  done
+          cd - || exit 1
+        done
 
   post_build:
     commands:
-      - echo "Updating Lambda functions..."
+      - echo "🚀 Updating Lambda function code from S3..."
 
       - aws lambda update-function-code --function-name cognito_login --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/cognito_login/function.zip
       - aws lambda update-function-code --function-name Cognito_register --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Cognito_register/function.zip
