@@ -17,14 +17,30 @@ phases:
     commands:
       - echo "Zipping and uploading Lambda functions..."
 
-      # Loop through Lambda directories and zip/upload each one
-      - for dir in Lambda/*/ ; do
-          fname=$(basename $dir);
-          cd $dir;
-          zip -r function.zip .;
-          aws s3 cp function.zip s3://$S3_BUCKET/$LAMBDA_BASE_PATH/$fname/function.zip;
-          cd -;
-        done
+     # Loop through Lambda directories and zip/upload each one
+- |
+  for dir in Lambda/*/ ; do
+    fname=$(basename "$dir")
+    echo "Zipping and uploading Lambda function: $fname"
+
+    cd "$dir" || exit 1
+
+    # Install production-only dependencies (if using package.json)
+    if [ -f package.json ]; then
+      npm install --only=production
+    fi
+
+    # Remove local .env files (optional but recommended for security)
+    rm -f .env
+
+    # Zip the function including node_modules, but excluding unneeded files
+    zip -r function.zip . -x "*.test.js" -x "*.spec.js" -x "node_modules/aws-sdk/*"
+
+    # Upload to S3
+    aws s3 cp function.zip "s3://$S3_BUCKET/$LAMBDA_BASE_PATH/$fname/function.zip"
+
+    cd - || exit 1
+  done
 
   post_build:
     commands:
