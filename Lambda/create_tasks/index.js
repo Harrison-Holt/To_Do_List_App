@@ -8,6 +8,8 @@ const db_config = {
     database: process.env.DB_NAME
 }
 
+// This is a test commment updated through codebuild!
+
 export const handler = async (event) => {
 
     let connection; 
