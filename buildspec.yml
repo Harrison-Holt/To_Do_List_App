@@ -35,7 +35,7 @@ phases:
       - aws lambda update-function-code --function-name complete_task_private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Complete_Task_Private/function.zip
       - aws lambda update-function-code --function-name complete_task_public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Complete_Task_Public/function.zip
       - aws lambda update-function-code --function-name create_tasks --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/create_tasks/function.zip
-      - aws lambda update-function-code --function-name create_take_public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Create_Tasks_Public/function.zip
+      - aws lambda update-function-code --function-name create_take_public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/create_take_public/function.zip
       - aws lambda update-function-code --function-name delete_task_private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Delete_Task_Private/function.zip
       - aws lambda update-function-code --function-name delete_task_public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Delete_Tasks_Public/function.zip
       - aws lambda update-function-code --function-name delete_user_private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Delete_User_Private/function.zip

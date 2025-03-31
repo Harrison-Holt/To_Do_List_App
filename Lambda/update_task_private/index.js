@@ -15,17 +15,18 @@ export const handler = async (event) => {
     try {
         console.log("🔹 Raw Event:", event);
 
-        const { user_id, task_id, task_name, task_date, task_time, task_priority } = event; 
+        const { user_id, task_name, task_date, task_time, task_priority } = event;
 
-        if (!user_id || !task_id || !task_name || !task_date || !task_time || !task_priority) {
+        if (!user_id || !task_name || !task_date || !task_time || !task_priority) {
             return {
                 statusCode: 400,
-                body: JSON.stringify({ message: "All fields (user_id, task_id, task_name, task_date, task_time, task_priority) are required!" })
+                body: JSON.stringify({ message: "All fields (user_id, task_name, task_date, task_time, task_priority) are required!" })
             };
         }
 
         connection = await mysql2.createConnection(db_config);
 
+        // Check if user exists
         const checkUserSQL = `SELECT COUNT(*) AS count FROM accounts WHERE user_id = ?`;
         const [userCheckResult] = await connection.execute(checkUserSQL, [user_id]);
         const userExists = userCheckResult[0].count > 0;
@@ -37,45 +38,26 @@ export const handler = async (event) => {
             };
         }
 
-        const checkTaskSQL = `SELECT COUNT(*) AS count FROM tasks WHERE task_id = ? AND user_id = ?`;
-        const [taskCheckResult] = await connection.execute(checkTaskSQL, [task_id, user_id]);
-        const taskExists = taskCheckResult[0].count > 0;
-
-        if (!taskExists) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ message: "Task ID does not exist or does not belong to the user!" })
-            };
-        }
-
-        const updateSQL = `
-            UPDATE tasks
-            SET 
-                task_name = ?, 
-                task_date = ?, 
-                task_time = ?, 
-                task_priority = ?
-            WHERE task_id = ? AND user_id = ?`;
-
-        const [result] = await connection.execute(updateSQL, [task_name, task_date, task_time, task_priority, task_id, user_id]);
-
-        if (result.affectedRows === 0) {
-            return {
-                statusCode: 404,
-                body: JSON.stringify({ message: "Task not found or user not authorized to update this task." })
-            };
-        }
+        // Insert new task
+        const insertSQL = `
+            INSERT INTO tasks (user_id, task_name, task_date, task_time, task_priority)
+            VALUES (?, ?, ?, ?, ?)
+        `;
+        const [result] = await connection.execute(insertSQL, [user_id, task_name, task_date, task_time, task_priority]);
 
         return {
-            statusCode: 200,
-            body: JSON.stringify({ message: "Successfully updated task!", affectedRows: result.affectedRows })
+            statusCode: 201,
+            body: JSON.stringify({
+                message: "Task created successfully!",
+                task_id: result.insertId
+            })
         };
 
     } catch (error) {
-        console.error("Error updating task:", error);
+        console.error("Error creating task:", error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ message: "Failed to update task!", error: error.message })
+            body: JSON.stringify({ message: "Failed to create task!", error: error.message })
         };
     } finally {
         if (connection) await connection.end();
