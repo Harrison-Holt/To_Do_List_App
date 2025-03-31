@@ -15,7 +15,30 @@ export const handler = async (event) => {
     try {
         const { task_id, user_id } = event; 
 
-        connect = await mysql2.createConnection(db_config); 
+        connection = await mysql2.createConnection(db_config); 
+
+        const checkUserSQL = `SELECT COUNT(*) AS count FROM accounts WHERE user_id = ?`;
+        const [userCheckResult] = await connection.execute(checkUserSQL, [user_id]);
+        const userExists = userCheckResult[0].count > 0;
+
+        if (!userExists) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: "User ID does not exist!" })
+            };
+        }
+
+        const checkTaskSQL = `SELECT COUNT(*) AS count FROM tasks WHERE task_id = ? AND user_id = ?`;
+        const [taskCheckResult] = await connection.execute(checkTaskSQL, [task_id, user_id]);
+        const taskExists = taskCheckResult[0].count > 0;
+
+        if (!taskExists) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: "Task ID does not exist or does not belong to the user!" })
+            };
+        }
+
 
         const delete_sql = `DELETE FROM tasks 
         WHERE task_id = ? AND user_id = ?`; 

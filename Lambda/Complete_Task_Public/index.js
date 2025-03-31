@@ -1,4 +1,4 @@
-import { LambdaClient, InvokeCommand, InvocationType } from "@aws-sdk/client-lambda";
+import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 import dotenv from 'dotenv'; 
 
 dotenv.config(); 
@@ -6,50 +6,82 @@ dotenv.config();
 const lambdaClient = new LambdaClient({ region: process.env.REGION }); 
 
 export const handler = async (event) => {
-
     try {
+        // ✅ Handle CORS Preflight Requests (OPTIONS Method)
+        if (event.httpMethod === "OPTIONS") {
+            return {
+                statusCode: 204,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS, PATCH",
+                    "Access-Control-Allow-Headers": "Content-Type, Authorization"
+                },
+                body: ""
+            };
+        }
 
-        if(event.httpMethod !== 'PATCH') {
+        // ✅ Ensure only PATCH requests are allowed
+        if (event.httpMethod !== 'PATCH') {
             return {
                 statusCode: 405,
-                body: JSON.stringify({ message: 'Only PATCH method is allowed!'})
-            }
-        } 
+                headers: { "Access-Control-Allow-Origin": "*" },
+                body: JSON.stringify({ message: 'Only PATCH method is allowed!' })
+            };
+        }
 
-        const { task_id, user_id } = JSON.parse(event.body); 
+        // ✅ Parse the request body safely
+        const { task_id, user_id } = JSON.parse(event.body);
 
-        if( !task_id || !user_id ) {
+        // ✅ Validate required fields
+        if (!task_id || !user_id) {
             return {
-                statusCode: 400, 
-                body: JSON.stringify({ message: 'Task ID and User ID are required!'})
-            }
+                statusCode: 400,
+                headers: { "Access-Control-Allow-Origin": "*" },
+                body: JSON.stringify({ message: 'Task ID and User ID are required!' })
+            };
         }
 
+        console.log("🔹 Sending request to private Lambda:", { task_id, user_id });
+
+        // ✅ Invoke Private Lambda Function
         const params = {
-            FunctionName: process.env.PRIVATE_LAMBDA_ARN, 
-            InvocationType: 'RequestResponse', 
-            Payload: JSON.stringify({task_id, user_id})
-        }
+            FunctionName: process.env.PRIVATE_LAMBDA_ARN,
+            InvocationType: 'RequestResponse',
+            Payload: JSON.stringify({ task_id, user_id })
+        };
 
-        const command = new InvokeCommand(params); 
-        const response = await lambdaClient.send(command); 
+        const command = new InvokeCommand(params);
+        const response = await lambdaClient.send(command);
 
-        if(response.StatusCode !== 200) {
+        const rawResponse = new TextDecoder().decode(response.Payload);
+        const responseBody = JSON.parse(rawResponse);
+        const parsedBody = JSON.parse(responseBody.body);
+
+        if (response.StatusCode !== 200 || responseBody.statusCode !== 200) {
             return {
                 statusCode: 500,
-                body: JSON.stringify({ message: 'Error sending to private lambda!', response: response.Payload})
-            }
-        } else {
-        return { 
-            statusCode: 200, 
-            body: JSON.stringify({ message: 'Successfully sent to private lambda', response: response.Payload})
+                headers: { "Access-Control-Allow-Origin": "*" },
+                body: JSON.stringify({
+                    message: "Private Lambda failed!",
+                    error: parsedBody
+                })
+            };
         }
-    }
-    } catch(error) {
-        console.error('Error sending to private lambda!', error); 
+
+        console.log("✅ Private Lambda execution successful");
+
         return {
-            statusCode: 500, 
-            body: JSON.stringify({ message: 'Error sending to private lambda!', error: error.message})
-        }
+            statusCode: 200,
+            headers: { "Access-Control-Allow-Origin": "*" },
+            body: JSON.stringify({ message: 'Successfully sent to private lambda', response: parsedBody })
+        };
+
+    } catch (error) {
+        console.error("❌ Error sending to private lambda!", error);
+        return {
+            statusCode: 500,
+            headers: { "Access-Control-Allow-Origin": "*" },
+            body: JSON.stringify({ message: "Error sending to private lambda!", error: error.message })
+        };
     }
-}
+};
