@@ -1,5 +1,5 @@
 {
-  "name": "create_tasks",
+  "name": "cognito_login",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -11,7 +11,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.777.0",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
-    "mysql2": "^3.14.0"
+    "jsonwebtoken": "^9.0.2"
   }
 }
