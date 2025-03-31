@@ -18,7 +18,6 @@ export const handler = async (event) => {
 
         const { username, email, user_id } = event; // user_id = Cognito sub
 
-        // ✅ Validate Input
         if (!username || !email || !user_id) {
             return {
                 statusCode: 400,
@@ -28,16 +27,13 @@ export const handler = async (event) => {
 
         console.log(`🔹 Storing user ${username} (${email}) with Cognito user_id: ${user_id}`);
 
-        // ✅ Connect to MySQL
         connection = await mysql2.createConnection(db_config);
 
-        // ✅ Insert into accounts table (Replacing auto-generated ID with Cognito user_id)
         const insert_sql = `INSERT INTO accounts (username, email, user_id) VALUES (?, ?, ?);`;
         await connection.execute(insert_sql, [username, email, user_id]);
 
         console.log("✅ User stored successfully in database!");
 
-        // ✅ Close connection
         await connection.end();
 
         return {
