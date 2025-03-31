@@ -1,11 +1,48 @@
 version: 0.2
 
+env:
+  variables:
+    S3_BUCKET: to-do-list-frontend
+    LAMBDA_BASE_PATH: lambda
+
 phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+    commands:
+      - echo "Installing AWS CLI..."
+      - npm install -g aws-cli zip
+
   build:
     commands:
-      - echo "Skipping actual build"
+      - echo "Zipping and uploading Lambda functions..."
 
-artifacts:
-  files:
-    - '**/*'
-  base-directory: frontend  
+      # Loop through Lambda directories and zip/upload each one
+      - for dir in Lambda/*/ ; do
+          fname=$(basename $dir);
+          cd $dir;
+          zip -r function.zip .;
+          aws s3 cp function.zip s3://$S3_BUCKET/$LAMBDA_BASE_PATH/$fname/function.zip;
+          cd -;
+        done
+
+  post_build:
+    commands:
+      - echo "Updating Lambda functions..."
+
+      # Add each Lambda name exactly as it is in AWS Lambda Console
+      - aws lambda update-function-code --function-name Cognito_Login --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Cognito_Login/function.zip
+      - aws lambda update-function-code --function-name Cognito_Registration --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Cognito_Registration/function.zip
+      - aws lambda update-function-code --function-name Complete_Task_Private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Complete_Task_Private/function.zip
+      - aws lambda update-function-code --function-name Complete_Task_Public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Complete_Task_Public/function.zip
+      - aws lambda update-function-code --function-name Create_Tasks_Private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Create_Tasks_Private/function.zip
+      - aws lambda update-function-code --function-name Create_Tasks_Public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Create_Tasks_Public/function.zip
+      - aws lambda update-function-code --function-name Delete_Task_Private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Delete_Task_Private/function.zip
+      - aws lambda update-function-code --function-name Delete_Tasks_Public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Delete_Tasks_Public/function.zip
+      - aws lambda update-function-code --function-name Delete_User_Private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Delete_User_Private/function.zip
+      - aws lambda update-function-code --function-name Delete_User_Public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Delete_User_Public/function.zip
+      - aws lambda update-function-code --function-name Featured_Quote --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Featured_Quote/function.zip
+      - aws lambda update-function-code --function-name Get_Tasks_Private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Get_Tasks_Private/function.zip
+      - aws lambda update-function-code --function-name Get_Tasks_Public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Get_Tasks_Public/function.zip
+      - aws lambda update-function-code --function-name update_task_private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/update_task_private/function.zip
+      - aws lambda update-function-code --function-name update_task_public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/update_task_public/function.zip
