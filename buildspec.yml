@@ -30,8 +30,8 @@ phases:
     commands:
       - echo "Updating Lambda functions..."
 
-      - aws lambda update-function-code --function-name cognito_login --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Cognito_Login/function.zip
-      - aws lambda update-function-code --function-name Cognito_register --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Cognito_Registration/function.zip
+      - aws lambda update-function-code --function-name cognito_login --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/cognito_login//function.zip
+      - aws lambda update-function-code --function-name Cognito_register --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Cognito_register/function.zip
       - aws lambda update-function-code --function-name complete_task_private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Complete_Task_Private/function.zip
       - aws lambda update-function-code --function-name complete_task_public --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Complete_Task_Public/function.zip
       - aws lambda update-function-code --function-name create_tasks --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/create_tasks/function.zip
