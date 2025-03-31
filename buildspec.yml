@@ -30,7 +30,6 @@ phases:
     commands:
       - echo "Updating Lambda functions..."
 
-      # Add each Lambda name exactly as it is in AWS Lambda Console
       - aws lambda update-function-code --function-name Cognito_Login --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Cognito_Login/function.zip
       - aws lambda update-function-code --function-name Cognito_Registration --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Cognito_Registration/function.zip
       - aws lambda update-function-code --function-name Complete_Task_Private --s3-bucket $S3_BUCKET --s3-key $LAMBDA_BASE_PATH/Complete_Task_Private/function.zip
