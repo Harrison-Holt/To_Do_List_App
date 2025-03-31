@@ -13,6 +13,8 @@ const db_config = {
 export const handler = async (event) => {
     let connection;
 
+    console.log("Updated Lambda Function Via CodeBuild!")
+
     try {
         console.log("Incoming event:", JSON.stringify(event, null, 2));
 
@@ -45,7 +47,7 @@ export const handler = async (event) => {
         };
 
     } catch (error) {
-        console.error("❌ Error storing user in database!", error);
+        console.error("Error storing user in database!", error);
         return {
             statusCode: 500,
             body: JSON.stringify({ message: "Database error!", error: error.message })
