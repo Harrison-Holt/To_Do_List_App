@@ -302,14 +302,18 @@ function renderTasks(tasks) {
 
 
 
-function edit_task_by_details(task_name, task_due_date, task_due_time, task_priority) {
+function edit_task_by_details(task_name, task_date, task_time, task_priority) {
     // Find the task in the global task list
     const task = tasks_list.find(t => 
         t.task_name === task_name &&
-        t.task_due_date === task_due_date &&
-        t.task_due_time === task_due_time &&
+        t.task_date === task_date &&
+        t.task_time === task_time &&
         t.task_priority === task_priority
     );
+
+    console.log("Searching for:", { task_name, task_date, task_time, task_priority });
+console.log("Available tasks:", tasks_list);
+
 
     if (task) {
         // Redirect to add_task.html with the found task_id
@@ -318,6 +322,7 @@ function edit_task_by_details(task_name, task_due_date, task_due_time, task_prio
         alert("⚠️ Task not found. Please try again.");
     }
 }
+
 
 
 function create_task_card(task) {
